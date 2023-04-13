@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+
+@layer base {
+	body {
+		@apply font-inter text-white;
+	}
+
+	h1 {
+		@apply text-5xl font-bold !important;
+	}
+
+	h3 {
+		@apply text-3xl !important;
+	}
+
+	h4 {
+		@apply text-2xl !important;
+	}
+}
+
+@layer components {
+	.btn {
+		@apply w-full px-8 py-2 h-[48px] rounded-full font-medium cursor-pointer;
+	}
+}
