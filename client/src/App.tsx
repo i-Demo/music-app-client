@@ -1,20 +1,52 @@
 import "./App.css";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Landing from "./components/layout/Landing";
-import Auth from "./pages/Auth";
+import PrivateRoute from "./routes/PrivateRoute";
+import DefaultLayout from "./layout/DefaultLayout";
+import AuthContextProvider from "./contexts/authContext";
+import { privateRoutes, publicRoutes } from "./routes";
+import { LOCAL_STORAGE_TOKEN_NAME } from "./contexts/variables";
 
 function App() {
+    function storageChange(e: any) {
+        if (e.key === LOCAL_STORAGE_TOKEN_NAME) {
+            window.location.reload();
+        }
+    }
+    useEffect(() => {
+        window.addEventListener("storage", storageChange, false);
+        return () => {
+            window.removeEventListener("storage", storageChange, false);
+        };
+    }, []);
+
     return (
-        <Router>
-            <div className="App">
-                <Routes>
-                    <Route path="/" element={<Landing />} />
-                    <Route path="/welcome" element={<Auth authRoute='welcome'/>} />
-                    <Route path="/login" element={<Auth authRoute='login'/>} />
-                    <Route path="/register" element={<Auth authRoute='register'/>} />
-                </Routes>
-            </div>
-        </Router>
+        <AuthContextProvider>
+            <Router>
+                <div className="App">
+                    <Routes>
+                        {publicRoutes.map((route, index): any => {
+                            return <Route key={index} path={route.path} element={route.element} />;
+                        })}
+
+                        {privateRoutes.map((route, index): any => {
+                            let Layout = DefaultLayout;
+                            return (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={
+                                        <PrivateRoute>
+                                            <Layout>{route.element}</Layout>
+                                        </PrivateRoute>
+                                    }
+                                />
+                            );
+                        })}
+                    </Routes>
+                </div>
+            </Router>
+        </AuthContextProvider>
     );
 }
 

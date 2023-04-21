@@ -9,12 +9,10 @@ function Welcome() {
             </h3>
 
             <Link to="/login" className="w-full">
-                <button className="btn bg-btn text-primary opacity-90 hover:opacity-100 mb-8">Log in</button>
+                <button className="btn bg-btn mb-8">Log in</button>
             </Link>
-            <Link to="/login" className="mb-12 text-sm text-tGray">
-                <a href="#">
-                    Don't have an account? <span className="underline uppercase">signup</span>
-                </a>
+            <Link to="/register" className="mb-12 text-sm text-tGray">
+                Don't have an account? <span className="underline uppercase text-white font-semibold">signup</span>
             </Link>
         </>
     );

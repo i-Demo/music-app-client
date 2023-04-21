@@ -1,26 +1,110 @@
 @tailwind base;
 @tailwind components;
+@tailwind utilities;
 
 @layer base {
-	body {
-		@apply font-inter text-white;
-	}
+    body {
+        @apply font-inter text-white;
+    }
 
-	h1 {
-		@apply text-5xl font-bold !important;
-	}
+    /* body[data-them="light"] {
+        @apply text-primary;
+    } */
 
-	h3 {
-		@apply text-3xl !important;
-	}
+    h1 {
+        @apply text-5xl font-bold !important;
+    }
 
-	h4 {
-		@apply text-2xl !important;
-	}
+    h3 {
+        @apply text-3xl !important;
+    }
+
+    h4 {
+        @apply text-2xl !important;
+    }
+
+    h5 {
+        @apply text-xl !important;
+    }
 }
 
 @layer components {
-	.btn {
-		@apply w-full px-8 py-2 h-[48px] rounded-full font-medium cursor-pointer;
-	}
+    .btn {
+        @apply text-primary w-full px-8 py-2 h-[48px] rounded-full font-semibold cursor-pointer opacity-90 hover:opacity-100;
+    }
+    .input {
+        @apply w-full mb-4 h-10 py-2 pl-[14px] pr-12 text-sm bg-secondary opacity-90 focus:opacity-100 focus:outline-none;
+    }
+    .navLink {
+        @apply text-textGray flex items-center rounded-l gap-4 h-10 px-6 hover:text-white;
+    }
+    .btnRounded {
+        @apply rounded-full flex justify-center items-center w-8 h-8;
+    }
+    .tooltip {
+        @apply bg-bgTooltip text-white p-[6px] rounded-[4px] text-sm font-semibold;
+    }
+    .menu {
+        @apply bg-transparent rounded-sm cursor-default h-10 flex justify-between items-center gap-2 p-3 text-start hover:bg-secondary;
+    }
+    .inputModal {
+        @apply bg-bgInput h-10 px-3 rounded-md text-sm w-full outline-none focus:border focus:border-[#535353] focus:bg-[#333];
+    }
+    .labelModal {
+        @apply absolute top-[-10px] left-3 text-xs text-tGray bg-bg opacity-0;
+    }
+}
+
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 10px;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+        border-radius: 5px;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #b3b3b3;
+        visibility: hidden;
+    }
+
+    .scrollbar:hover::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #dadada;
+    }
+
+    .range {
+        height: 3px;
+        width: 100%;
+        border-radius: 100px;
+        -webkit-appearance: none;
+        background-color: grey;
+        background-image: linear-gradient(#fff, #fff);
+        background-repeat: no-repeat;
+        border: none;
+    }
+
+    .range:hover {
+        padding: 3px 0;
+        cursor: pointer;
+        background-image: linear-gradient(#1db954, #1db954);
+    }
+
+    ::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 0px;
+        width: 0px;
+        background-color: #fff;
+        transition: linear 0.1s;
+        border-radius: 50%;
+    }
+    .range:hover::-webkit-slider-thumb {
+        padding: 6px;
+        transition: linear 0.1s;
+    }
 }
