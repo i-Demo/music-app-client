@@ -15,18 +15,18 @@ function PlayingBarLeft() {
                         Chung ta cua hien tai
                     </p>
                 </Link>
-                <Link to="" className="whitespace-nowrap opacity-80 text-[10px] cursor-grab hover:underline" title="Son tung Mtp">
+                <Link to="" className="whitespace-nowrap opacity-80 text-[10px] cursor-grab hover:underline hover:opacity-100" title="Son tung Mtp">
                     <p>Son tung Mtp</p>
                 </Link>
             </div>
             <div className="flex gap-3 ml-2">
                 <Tippy content="Lưu vào thư viện" delay={[200, 0]} className="tooltip">
-                    <button className="">
+                    <button className="opacity-70 hover:opacity-100">
                         <SlHeart />
                     </button>
                 </Tippy>
                 <Tippy content="Khác" delay={[200, 0]} className="tooltip">
-                    <button>
+                    <button className="opacity-70 hover:opacity-100">
                         <SlOptions />
                     </button>
                 </Tippy>

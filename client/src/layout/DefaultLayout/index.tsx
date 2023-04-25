@@ -9,9 +9,9 @@ function DefaultLayout({ children }: any) {
                 <Sidebar />
                 <div className="flex-1 relative">
                     <Header />
-                    <div className="flex flex-col dashboard bg-bgDashboard h-[calc(100vh-90px)] w-full overflow-y-auto px-8 pt-16 pb-8 scrollbar">
-                        <div className="flex-1">{children}</div>
-                        <div className="py-20 w-full">
+                    <div className="bg-bgDashboard dashboard h-[calc(100vh-90px)] overflow-y-auto overflow-x-hidden w-full scrollbar scrollbarHide">
+                        {children}
+                        <div className="pt-20 pb-32 px-8 w-full">
                             <hr className="border-secondary" />
                         </div>
                     </div>

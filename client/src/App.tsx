@@ -6,6 +6,7 @@ import DefaultLayout from "./layout/DefaultLayout";
 import AuthContextProvider from "./contexts/authContext";
 import { privateRoutes, publicRoutes } from "./routes";
 import { LOCAL_STORAGE_TOKEN_NAME } from "./contexts/variables";
+import NotFound from "./pages/NotFound";
 
 function App() {
     function storageChange(e: any) {
@@ -43,6 +44,7 @@ function App() {
                                 />
                             );
                         })}
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </div>
             </Router>

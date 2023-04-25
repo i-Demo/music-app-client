@@ -13,16 +13,16 @@ function PlayingBarCenter() {
         <div className="w-[40%] max-w-[722px] flex-1 px-4">
             <div className="flex items-center justify-center gap-4 text-2xl">
                 <Tippy content="Bật phát ngẫu nhiên" delay={[200, 0]} className="tooltip">
-                    <button className="text-xl">
-                        <BsShuffle />
+                    <button className="text-xl opacity-70 hover:opacity-100">
+                        <BsShuffle className="" />
                     </button>
                 </Tippy>
                 <Tippy content="Trước" delay={[200, 0]} className="tooltip">
-                    <button>
+                    <button className="opacity-70 hover:opacity-100">
                         <MdSkipPrevious className="text-3xl" />
                     </button>
                 </Tippy>
-                <div>
+                <div className="hover:scale-105">
                     <Tippy content="Phát" delay={[200, 0]} className="tooltip">
                         <button className="text-primary bg-white rounded-full text-3xl">
                             <MdPlayArrow className="" />
@@ -35,18 +35,18 @@ function PlayingBarCenter() {
                     </Tippy>
                 </div>
                 <Tippy content="Tiếp theo" delay={[200, 0]} className="tooltip">
-                    <button>
+                    <button className="opacity-70 hover:opacity-100">
                         <MdSkipNext className="text-3xl" />
                     </button>
                 </Tippy>
                 <Tippy content="Bật phát lại tất cả" delay={[200, 0]} className="tooltip">
-                    <button>
+                    <button className="opacity-70 hover:opacity-100">
                         <MdRepeat />
                     </button>
                 </Tippy>
             </div>
-            <div className="flex items-center justify-center text-sm">
-                <span>00:38</span>
+            <div className="flex items-center justify-center text-xs">
+                <span className="opacity-70">00:38</span>
                 <input
                     type="range"
                     id="timeRange"
@@ -57,7 +57,7 @@ function PlayingBarCenter() {
                     className={`w-full mx-2 cursor-pointer range`}
                     onInput={(e: any) => setPercentTime(e.target.value)}
                 />
-                <span>04:38</span>
+                <span className="opacity-70">04:38</span>
             </div>
         </div>
     );

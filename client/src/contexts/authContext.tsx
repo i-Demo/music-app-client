@@ -9,6 +9,7 @@ interface AuthContextType {
     registerUser: (userData: object) => Promise<any>;
     loginUser: (userData: object) => Promise<any>;
     logoutUser: () => void;
+    updateProfile: (data: object) => Promise<any>;
     authState: any;
 }
 export const AuthContext = createContext({} as AuthContextType);
@@ -101,7 +102,21 @@ function AuthContextProvider({ children }: Props) {
         notAuthDispatch();
     };
 
-    const authContextData = { registerUser, loginUser, logoutUser, authState };
+    // Update profile user
+    const updateProfile = async (dataProfile: object) => {
+        try {
+            const response = await axios.put(`${apiUrl}/auth/update-profile`, dataProfile);
+            if (response.data.success) {
+                authDispatch(response);
+                return response.data;
+            }
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
+    const authContextData = { registerUser, loginUser, logoutUser, updateProfile, authState };
 
     useEffect(() => {
         loadUser();

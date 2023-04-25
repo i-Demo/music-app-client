@@ -43,21 +43,21 @@ function PlayingBarRight() {
     return (
         <div className="w-[30%] flex flex-row items-center justify-end gap-2 lg:gap-6 text-xl px-4">
             <Tippy content="Lời bài hát" delay={[200, 0]} className="tooltip">
-                <button>
+                <button className="opacity-70 hover:opacity-100">
                     <TbMicrophone2 />
                 </button>
             </Tippy>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 group">
                 {isMute && (
                     <Tippy content="Bật tiếng" delay={[200, 0]} className="tooltip">
-                        <button onClick={handleUnmute}>
+                        <button onClick={handleUnmute} className="opacity-70 hover:opacity-100">
                             <VscMute />
                         </button>
                     </Tippy>
                 )}
                 {!isMute && (
                     <Tippy content="Tắt tiếng" delay={[200, 0]} className="tooltip">
-                        <button onClick={handleMute}>
+                        <button onClick={handleMute} className="opacity-70 hover:opacity-100 group">
                             <VscUnmute />
                         </button>
                     </Tippy>
@@ -69,12 +69,12 @@ function PlayingBarRight() {
                     max="100"
                     value={current}
                     onInput={handleChangeVolume}
-                    className="w-24 range"
+                    className="w-24 range group-hover:rangeHover"
                 />
             </div>
             <div className="h-[33px] w-[1px] lg:mx-2 bg-slate-600 md"></div>
             <Tippy content="Danh sách chờ" delay={[200, 0]} className="tooltip">
-                <button>
+                <button className="opacity-70 hover:opacity-100">
                     <BsMusicNoteList />
                 </button>
             </Tippy>

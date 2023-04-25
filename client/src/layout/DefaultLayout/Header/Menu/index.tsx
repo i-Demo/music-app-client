@@ -11,7 +11,7 @@ function Menu({ children }: { children: JSX.Element }) {
         { title: "Hồ sơ", to: "/profile" },
         {
             title: "Cài đặt",
-            to: "preferences",
+            to: "/preferences",
         },
         {
             title: "Ngôn ngữ",
@@ -29,14 +29,19 @@ function Menu({ children }: { children: JSX.Element }) {
                         code: "vi",
                     },
                     {
-                        title: "English",
+                        title: "Japanese",
                         type: "language",
-                        code: "en",
+                        code: "jap",
                     },
                     {
-                        title: "Tiếng việt",
+                        title: "Chinese",
                         type: "language",
-                        code: "vi",
+                        code: "chi",
+                    },
+                    {
+                        title: "Spanish",
+                        type: "language",
+                        code: "span",
                     },
                 ],
             },

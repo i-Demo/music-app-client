@@ -53,16 +53,27 @@
     .labelModal {
         @apply absolute top-[-10px] left-3 text-xs text-tGray bg-bg opacity-0;
     }
+    .spaceHeader {
+        @apply flex px-8 pt-20 pb-8;
+    }
+    .spaceContent {
+        @apply px-8 py-6;
+    }
 }
 
 @layer utilities {
     .scrollbar::-webkit-scrollbar {
-        width: 8px;
+        width: 10px;
         height: 10px;
+    }
+
+    .scrollbarHide::-webkit-scrollbar {
+        display: none;
     }
 
     .scrollbar::-webkit-scrollbar-track {
         border-radius: 5px;
+        background: transparent;
     }
 
     .scrollbar::-webkit-scrollbar-thumb {
@@ -104,6 +115,17 @@
         border-radius: 50%;
     }
     .range:hover::-webkit-slider-thumb {
+        padding: 6px;
+        transition: linear 0.1s;
+    }
+
+    .rangeHover {
+        padding: 3px 0;
+        cursor: pointer;
+        background-image: linear-gradient(#1db954, #1db954);
+    }
+
+    .rangeHover::-webkit-slider-thumb {
         padding: 6px;
         transition: linear 0.1s;
     }

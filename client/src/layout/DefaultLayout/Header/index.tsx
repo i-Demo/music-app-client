@@ -48,9 +48,9 @@ function Header() {
                         <button className="flex justify-center items-center gap-2 h-8 rounded-3xl bg-primary p-[2px] hover:bg-bgTooltip">
                             <div className="w-7 h-7 object-fit">
                                 <img
-                                    src={user.image || defaultAvatar}
+                                    src={user.avatar || defaultAvatar}
                                     alt="Avatar"
-                                    className="rounded-full border-none w-full h-full"
+                                    className="rounded-full border-none w-full h-full object-fit"
                                 />
                             </div>
                             <span className="hidden md:block text-sm font-semibold whitespace-nowrap">{user.name}</span>
