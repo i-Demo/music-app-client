@@ -11,7 +11,7 @@ function PlayingBarLeft() {
             </div>
             <div className="text-sm flex flex-col gap-1 min-w-0 overflow-hidden">
                 <Link to="" className="hover:underline " title="Chung ta cua hien tai">
-                    <p className="whitespace-nowrap text-ellipsis ... hover:text-clip hover:animate-slide-left">
+                    <p className="whitespace-nowrap text-ellipsis hover:text-clip hover:animate-slide-left">
                         Chung ta cua hien tai
                     </p>
                 </Link>

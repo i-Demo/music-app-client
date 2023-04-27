@@ -13,6 +13,8 @@ function CreateSong() {
         artist: "",
         image: "",
         duration: 0,
+        lyrics: "",
+        country: "",
     });
 
     // Two-way binding Register Data
@@ -143,6 +145,40 @@ function CreateSong() {
                         name="duration"
                         onChange={onChangeSongData}
                         value={songData.duration}
+                        placeholder="Jane"
+                    />
+                </div>
+                <div className="w-full md:w-full px-3 mb-6 md:mb-0">
+                    <label
+                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="grid-first-name"
+                    >
+                        Lyrics
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        id="grid-first-name"
+                        type="text"
+                        name="lyrics"
+                        onChange={onChangeSongData}
+                        value={songData.lyrics}
+                        placeholder="Jane"
+                    />
+                </div>
+                <div className="w-full md:w-full px-3 mb-6 md:mb-0">
+                    <label
+                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="grid-first-name"
+                    >
+                        Country
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        id="grid-first-name"
+                        type="text"
+                        name="country"
+                        onChange={onChangeSongData}
+                        value={songData.country}
                         placeholder="Jane"
                     />
                 </div>

@@ -17,15 +17,20 @@ function Header() {
     useEffect(() => {
         const dashboard = document.querySelector(".dashboard") as HTMLElement;
         const header = document.querySelector(".header") as HTMLElement;
-
-        dashboard.addEventListener("scroll", () => {
+        const handleScroll = () => {
             if (dashboard.scrollTop > 0) {
                 header.style.backgroundColor = "#121212";
                 header.style.opacity = `${dashboard.scrollTop / 64}`;
             } else {
                 header.style.backgroundColor = "transparent";
             }
-        });
+        };
+
+        dashboard.addEventListener("scroll", handleScroll);
+
+        () => {
+            dashboard.removeEventListener("scroll", handleScroll);
+        };
     }, []);
     return (
         <header className="h-16 absolute top-0 right-0 left-0 z-[3] flex justify-between items-center px-10">

@@ -20,6 +20,7 @@ export default {
                 brown: "#D2B48C",
                 bgModal: "rgba(0, 0, 0, 0.4)",
                 bgInput: "rgba(255, 255, 255, 0.1)",
+                bgMore: "#313131",
             },
             backgroundImage: {
                 auth: "url('../src/assets/images/bgImage.jpg')",

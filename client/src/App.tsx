@@ -7,6 +7,7 @@ import AuthContextProvider from "./contexts/authContext";
 import { privateRoutes, publicRoutes } from "./routes";
 import { LOCAL_STORAGE_TOKEN_NAME } from "./contexts/variables";
 import NotFound from "./pages/NotFound";
+import SongContextProvider from "./contexts/songContext";
 
 function App() {
     function storageChange(e: any) {
@@ -23,31 +24,33 @@ function App() {
 
     return (
         <AuthContextProvider>
-            <Router>
-                <div className="App">
-                    <Routes>
-                        {publicRoutes.map((route, index): any => {
-                            return <Route key={index} path={route.path} element={route.element} />;
-                        })}
-
-                        {privateRoutes.map((route, index): any => {
-                            let Layout = DefaultLayout;
-                            return (
-                                <Route
-                                    key={index}
-                                    path={route.path}
-                                    element={
-                                        <PrivateRoute>
-                                            <Layout>{route.element}</Layout>
-                                        </PrivateRoute>
-                                    }
-                                />
-                            );
-                        })}
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </div>
-            </Router>
+            <SongContextProvider>
+                <Router>
+                    <div className="App">
+                        <Routes>
+                            {publicRoutes.map((route, index): any => {
+                                return <Route key={index} path={route.path} element={route.element} />;
+                            })}
+    
+                            {privateRoutes.map((route, index): any => {
+                                let Layout = DefaultLayout;
+                                return (
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        element={
+                                            <PrivateRoute>
+                                                <Layout>{route.element}</Layout>
+                                            </PrivateRoute>
+                                        }
+                                    />
+                                );
+                            })}
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </div>
+                </Router>
+            </SongContextProvider>
         </AuthContextProvider>
     );
 }

@@ -1,39 +1,50 @@
-import { useContext, useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/authContext";
+import { useState, useEffect, useRef, useContext } from "react";
+import { SongContext } from "../../contexts/songContext";
+import NewSong from "./NewSong";
 import Loading from "../../components/Loading";
 
+interface TypeDataSongs {
+    newSongs: any;
+}
 function DashBoard() {
+    const [isLoading, setIsLoading] = useState(true);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const { getNewSong } = useContext(SongContext);
+
+    const [dataSongs, setDataSongs] = useState<TypeDataSongs>({
+        newSongs: [],
+    });
+
+    const callGetNewSongAPIs = async () => {
+        try {
+            const data = await Promise.all([
+                getNewSong({ limit: 12 }),
+                getNewSong({ country: "vietnam", limit: 12 }),
+                getNewSong({ country: { $ne: "vietnam" }, limit: 12 }),
+            ]);
+
+            setDataSongs({ ...dataSongs, newSongs: data });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        Promise.all([callGetNewSongAPIs()]).then(() => {
+            setIsLoading(false);
+        });
+
+        scrollRef.current?.scrollTo(0, 0);
+    }, []);
+
+    if (isLoading) return <Loading />;
+
     return (
-        <div className="">
-            <div className="flex-1">
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
-                <h2>dashboard</h2>
+        <div className="spaceHeader pt-16 flex flex-col min-w-[528px]" ref={scrollRef}>
+            <div className="mx-6 mb-8 bg-white h-72 rounded-md p-2">
+                <h2 className="text-primary">title</h2>
             </div>
-            {/* <div className="px-4 py-20 w-full">
-                <hr className="border-secondary" />
-            </div> */}
+            <NewSong songs={dataSongs.newSongs} />
         </div>
     );
 }

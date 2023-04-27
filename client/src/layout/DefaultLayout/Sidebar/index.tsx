@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "@assets/images/logo.svg";
 import { AiOutlineHome, AiOutlineSearch, AiFillHeart } from "react-icons/ai";
 import { FiMusic, FiStar } from "react-icons/fi";
@@ -22,7 +22,7 @@ function Sidebar() {
                         <NavItem to="/mv" icon={<MdMusicVideo className="text-2xl" />} title="MV" />
                     </nav>
                 </div>
-                
+
                 <hr className="mx-6 mt-2 border-secondary" />
 
                 <div className="overflow-y-auto scrollbar">
