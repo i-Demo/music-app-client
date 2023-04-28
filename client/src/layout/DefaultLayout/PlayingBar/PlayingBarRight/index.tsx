@@ -4,41 +4,44 @@ import { BsMusicNoteList } from "react-icons/bs";
 import { TbMicrophone2 } from "react-icons/tb";
 import { VscMute, VscUnmute } from "react-icons/vsc";
 
-function PlayingBarRight() {
-    const [percentVolume, setPercentVolume] = useState({ current: 100, prev: 100 });
+function PlayingBarRight({ audioRef }: any) {
+    const [volume, setVolume] = useState({ current: 1, prev: 1 });
     const [isMute, setIsMute] = useState(false);
-    const { current, prev } = percentVolume;
+    const { current, prev } = volume;
 
     const handleChangeVolume = (e: any) => {
         if (isMute && e.target.value > 0) {
             setIsMute(false);
         }
-        setPercentVolume({
-            ...percentVolume,
+        setVolume({
+            ...volume,
             prev: current,
             current: e.target.value,
         });
+        audioRef.current.volume = e.target.value;
     };
 
     const handleUnmute = () => {
+        audioRef.current.volume = prev;
         setIsMute(false);
-        setPercentVolume({
-            ...percentVolume,
+        setVolume({
+            ...volume,
             current: prev,
             prev: 0,
         });
     };
     const handleMute = () => {
+        audioRef.current.volume = 0;
         setIsMute(true);
-        setPercentVolume({
-            ...percentVolume,
+        setVolume({
+            ...volume,
             prev: current,
             current: 0,
         });
     };
     useEffect(() => {
         const volumeRange = document.querySelector("#volumeRange") as HTMLElement;
-        volumeRange.style.backgroundSize = `${current}% 100%`;
+        volumeRange.style.backgroundSize = `${current * 100}% 100%`;
     });
     return (
         <div className="w-[30%] flex flex-row items-center justify-end gap-2 lg:gap-6 text-xl px-4">
@@ -65,8 +68,9 @@ function PlayingBarRight() {
                 <input
                     type="range"
                     id="volumeRange"
-                    min="0"
-                    max="100"
+                    min={0}
+                    max={1}
+                    step={0.01}
                     value={current}
                     onInput={handleChangeVolume}
                     className="w-24 range group-hover:rangeHover"

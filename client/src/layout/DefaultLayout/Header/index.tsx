@@ -5,7 +5,7 @@ import { BiCaretDown } from "react-icons/bi";
 import { AuthContext } from "../../../contexts/authContext";
 import { useNavigate } from "react-router-dom";
 import Menu from "./Menu";
-import defaultAvatar from "@assets/images/defaultAvatar.webp";
+import defaultAvatar from "@assets/images/defaultAvatar.png";
 
 function Header() {
     const {

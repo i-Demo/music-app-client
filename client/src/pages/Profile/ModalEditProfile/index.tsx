@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { MdOutlineEdit } from "react-icons/md";
-import defaultAvatar from "@assets/images/defaultAvatar.webp";
+import defaultAvatar from "@assets/images/defaultAvatar.png";
 import { AuthContext } from "../../../contexts/authContext";
 import AlertMessage, { TypeAlert } from "../../../components/AlertMessage";
 import Loading from "../../../components/Loading";

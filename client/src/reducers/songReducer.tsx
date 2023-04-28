@@ -1,13 +1,26 @@
-export const songReducer = (state: object, action: { type: any; payload: {}; }) => {
+export const songReducer = (state: object, action: { type: string; payload: any }) => {
     const {
         type,
-        payload: {},
+        payload: { song, songs },
     } = action;
 
     switch (type) {
-        case "SET_AUTH":
+        case "SET_SONG":
             return {
                 ...state,
+                isPlaying: true,
+                song,
+                songs,
+            };
+        case "SET_PLAY":
+            return {
+                ...state,
+                isPlaying: true,
+            };
+        case "SET_PAUSE":
+            return {
+                ...state,
+                isPlaying: false,
             };
 
         default:

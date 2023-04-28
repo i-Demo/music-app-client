@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
-import defaultAvatar from "@assets/images/defaultAvatar.webp";
+import defaultAvatar from "@assets/images/defaultAvatar.png";
 import ModalEditProfile from "./ModalEditProfile";
 import { average } from "color.js";
 
@@ -9,6 +9,7 @@ function Profile() {
         authState: { user },
     } = useContext(AuthContext);
     const [isShowModal, setIsShowModal] = useState(false);
+    const avatar = user.avatar || defaultAvatar;
 
     const renderGender = (gender: any) => {
         if (gender === "male") {
@@ -31,7 +32,7 @@ function Profile() {
 
     useEffect(() => {
         const profileHeader = document.querySelector(".profileHeader") as HTMLElement;
-        average(`${user.avatar}`, { format: "hex" }).then((color) => {
+        average(`${avatar}`, { format: "hex" }).then((color) => {
             if (profileHeader) {
                 profileHeader.style.backgroundColor = `${color}`;
                 profileHeader.style.boxShadow = `0 50px 200px ${color}`;
@@ -45,14 +46,15 @@ function Profile() {
                     className="lg:w-[232px] lg:h-[232px] w-48 h-48 min-w-[192px] rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,_0,_0,_0.7)] cursor-pointer"
                     onClick={showProfileModal}
                 >
-                    <img src={user.avatar || defaultAvatar} alt="Avatar" className=" object-cover" />
+                    <img
+                        src={avatar}
+                        alt="Avatar"
+                        className=" object-cover lg:w-[232px] lg:h-[232px] w-48 h-48"
+                    />
                 </div>
                 <div className="flex flex-col flex-wrap justify-end md:gap-4 pb-4">
                     <span className="text-sm font-bold">Hồ sơ</span>
-                    <p
-                        className="text-7xl font-bold my-2 md:text-8xl cursor-pointer"
-                        onClick={showProfileModal}
-                    >
+                    <p className="text-7xl font-bold my-2 md:text-8xl cursor-pointer" onClick={showProfileModal}>
                         {user.name}
                     </p>
                 </div>
