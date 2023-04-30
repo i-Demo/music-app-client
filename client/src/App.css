@@ -36,7 +36,7 @@
         @apply w-full mb-4 h-10 py-2 pl-[14px] pr-12 text-sm bg-secondary opacity-90 focus:opacity-100 focus:outline-none;
     }
     .navLink {
-        @apply text-textGray flex items-center rounded-l gap-4 h-10 px-6 hover:text-white;
+        @apply text-textGray flex items-center gap-4 h-10 px-6 hover:text-white;
     }
     .btnRounded {
         @apply rounded-full flex justify-center items-center w-8 h-8;

@@ -1,46 +1,60 @@
 import { useEffect, useState, useContext } from "react";
-import { BsChevronRight, BsFillPauseFill, BsFillPlayFill, BsThreeDots } from "react-icons/bs";
+import { BsChevronRight, BsFillPlayFill, BsThreeDots } from "react-icons/bs";
 import { SongContext } from "../../contexts/songContext";
+import { Link } from "react-router-dom";
 
 function NewSong({ songs }: any) {
-    const [newSongsAll, newSongsVietnam, newSongsForeign] = songs;
+    const [newSongsAll, newSongsVietnam, newSongsKorea, newSongsUsUk] = songs;
     const [currentActive, setCurrentActive] = useState({ tab: "all", songs: newSongsAll });
     const { songState, setSongDispatch, pauseSongDispatch } = useContext(SongContext);
-
     useEffect(() => {}, []);
+    console.log(songState.songsRandom);
 
     return (
         <div>
             <h2 className="text-2xl font-bold mb-5">Mới phát hành</h2>
-            <div className="relative text-xs">
-                <button
-                    className={`px-6 py-1 border border-secondary rounded-full uppercase mr-4 ${
-                        currentActive.tab === "all" ? "bg-violet-700 border-violet-700" : ""
-                    }`}
-                    onClick={() => setCurrentActive({ tab: "all", songs: newSongsAll })}
-                >
-                    Tất cả
-                </button>
-                <button
-                    className={`px-6 py-1 border border-secondary rounded-full uppercase mr-4 ${
-                        currentActive.tab === "vietnam" ? "bg-violet-700 border-violet-700" : ""
-                    }`}
-                    onClick={() => setCurrentActive({ tab: "vietnam", songs: newSongsVietnam })}
-                >
-                    Việt Nam
-                </button>
-                <button
-                    className={`px-6 py-1 border border-secondary rounded-full uppercase mr-4 ${
-                        currentActive.tab === "foreign" ? "bg-violet-700 border-violet-700" : ""
-                    }`}
-                    onClick={() => setCurrentActive({ tab: "foreign", songs: newSongsForeign })}
-                >
-                    Quốc tế
-                </button>
+            <div className="text-xs flex justify-between gap-4">
+                <div className="flex gap-4">
+                    <button
+                        className={`px-6 py-1 border border-secondary rounded-full uppercase whitespace-nowrap h-[26px] ${
+                            currentActive.tab === "all" ? "bg-violet-700 border-violet-700" : ""
+                        }`}
+                        onClick={() => setCurrentActive({ tab: "all", songs: newSongsAll })}
+                    >
+                        Tất cả
+                    </button>
+                    <button
+                        className={`px-6 py-1 border border-secondary rounded-full uppercase whitespace-nowrap h-[26px] ${
+                            currentActive.tab === "vietnam" ? "bg-violet-700 border-violet-700" : ""
+                        }`}
+                        onClick={() => setCurrentActive({ tab: "vietnam", songs: newSongsVietnam })}
+                    >
+                        Việt Nam
+                    </button>
+                    <button
+                        className={`px-6 py-1 border border-secondary rounded-full uppercase whitespace-nowrap h-[26px] ${
+                            currentActive.tab === "korea" ? "bg-violet-700 border-violet-700" : ""
+                        }`}
+                        onClick={() => setCurrentActive({ tab: "korea", songs: newSongsKorea })}
+                    >
+                        Hàn Quốc
+                    </button>
+                    <button
+                        className={`px-6 py-1 border border-secondary rounded-full uppercase whitespace-nowrap h-[26px] ${
+                            currentActive.tab === "us-uk" ? "bg-violet-700 border-violet-700" : ""
+                        }`}
+                        onClick={() => setCurrentActive({ tab: "us-uk", songs: newSongsUsUk })}
+                    >
+                        US-UK
+                    </button>
+                </div>
 
-                <button className="absolute right-0 top-0 uppercase opacity-80 flex gap-2 items-center">
+                <Link
+                    to="/newPublish"
+                    className="uppercase opacity-80 flex gap-2 items-center whitespace-nowrap h-[26px]"
+                >
                     <span>Tất cả</span> <BsChevronRight className="text-lg" />
-                </button>
+                </Link>
             </div>
 
             <div className="grid grid-cols-2 gap-x-4 xl:gap-x-8 gap-y-2 xl:grid-cols-3 mt-6 min-w-[518px]">

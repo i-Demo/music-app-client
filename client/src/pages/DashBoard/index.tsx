@@ -9,7 +9,7 @@ interface TypeDataSongs {
 function DashBoard() {
     const [isLoading, setIsLoading] = useState(true);
     const scrollRef = useRef<HTMLDivElement>(null);
-    const { getNewSong } = useContext(SongContext);
+    const { getNewSongs } = useContext(SongContext);
 
     const [dataSongs, setDataSongs] = useState<TypeDataSongs>({
         newSongs: [],
@@ -18,9 +18,10 @@ function DashBoard() {
     const callGetNewSongAPIs = async () => {
         try {
             const data = await Promise.all([
-                getNewSong({ limit: 12 }),
-                getNewSong({ country: "vietnam", limit: 12 }),
-                getNewSong({ country: { $ne: "vietnam" }, limit: 12 }),
+                getNewSongs({ limit: 12 }),
+                getNewSongs({ country: "vietnam", limit: 12 }),
+                getNewSongs({ country: "korea", limit: 12 }),
+                getNewSongs({ country: "us-uk", limit: 12 }),
             ]);
 
             setDataSongs({ ...dataSongs, newSongs: data });

@@ -8,9 +8,9 @@ import NavItem from "./NavItem";
 function Sidebar() {
     return (
         <nav className="w-60 bg-primary h-full min-h-0">
-            <div className="pt-6 h-full flex flex-col">
+            <div className="h-full flex flex-col pt-2">
                 <Link to="/dashboard" className="w-full">
-                    <img src={logo} alt="Logo" className="px-5 mb-5" />
+                    <img src={logo} alt="Logo" className="pr-5 mb-5" />
                 </Link>
 
                 <div>

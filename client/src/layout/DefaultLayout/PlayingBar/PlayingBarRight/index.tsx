@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Tippy from "@tippyjs/react";
 import { BsMusicNoteList } from "react-icons/bs";
 import { TbMicrophone2 } from "react-icons/tb";
@@ -8,6 +8,7 @@ function PlayingBarRight({ audioRef }: any) {
     const [volume, setVolume] = useState({ current: 1, prev: 1 });
     const [isMute, setIsMute] = useState(false);
     const { current, prev } = volume;
+    const volumeRef = useRef<any>();
 
     const handleChangeVolume = (e: any) => {
         if (isMute && e.target.value > 0) {
@@ -40,9 +41,9 @@ function PlayingBarRight({ audioRef }: any) {
         });
     };
     useEffect(() => {
-        const volumeRange = document.querySelector("#volumeRange") as HTMLElement;
-        volumeRange.style.backgroundSize = `${current * 100}% 100%`;
+        volumeRef.current.style.backgroundSize = `${current * 100}% 100%`;
     });
+
     return (
         <div className="w-[30%] flex flex-row items-center justify-end gap-2 lg:gap-6 text-xl px-4">
             <Tippy content="Lời bài hát" delay={[200, 0]} className="tooltip">
@@ -68,6 +69,7 @@ function PlayingBarRight({ audioRef }: any) {
                 <input
                     type="range"
                     id="volumeRange"
+                    ref={volumeRef}
                     min={0}
                     max={1}
                     step={0.01}

@@ -1,7 +1,7 @@
-export const songReducer = (state: object, action: { type: string; payload: any }) => {
+export const songReducer = (state: any, action: { type: string; payload: any }) => {
     const {
         type,
-        payload: { song, songs },
+        payload: { song, songs, repeat },
     } = action;
 
     switch (type) {
@@ -22,7 +22,16 @@ export const songReducer = (state: object, action: { type: string; payload: any 
                 ...state,
                 isPlaying: false,
             };
-
+        case "SET_REPEAT":
+            return {
+                ...state,
+                repeat: repeat,
+            };
+        case "SET_RANDOM":
+            return {
+                ...state,
+                isRandom: !state.isRandom,
+            };
         default:
             return state;
     }

@@ -1,8 +1,10 @@
-import { useContext, useEffect, useRef, useImperativeHandle } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SongContext } from "../../contexts/songContext";
 
 function MusicPlayer({ timeSong, setTimeSong, audioRef }: any) {
-    const { songState, pauseSongDispatch } = useContext(SongContext);
+    const { songState, pauseSongDispatch, setSongDispatch } = useContext(SongContext);
+    let listSong: string | any[] = [];
+    songState.isRandom ? (listSong = songState.songsRandom) : (listSong = songState.songs);
 
     //Handle Update Time Song
     const handleTimeUpdate = (e: any) => {
@@ -17,6 +19,21 @@ function MusicPlayer({ timeSong, setTimeSong, audioRef }: any) {
         setTimeSong({ ...timeSong, duration: Math.floor(e.target.duration) });
     };
 
+    // Load time Song when Song Loaded
+    const handleSongEnded = () => {
+        const currentIndex = listSong.indexOf(songState.song);
+        if (songState.repeat === "1") {
+            audioRef.current.currentTime = 0;
+            audioRef.current.play();
+        } else if (songState.repeat === "all" && currentIndex === listSong.length - 1) {
+            setSongDispatch(listSong[0], songState.songs);
+        } else if (songState.repeat === "none" && currentIndex === listSong.length - 1) {
+            pauseSongDispatch();
+        } else {
+            setSongDispatch(listSong[currentIndex + 1], songState.songs);
+        }
+    };
+
     useEffect(() => {
         // Pause/Play Song when IsPlaying Change
         if (audioRef.current && !songState.isPlaying) {
@@ -25,6 +42,11 @@ function MusicPlayer({ timeSong, setTimeSong, audioRef }: any) {
             audioRef.current.play();
         }
     }, [songState.isPlaying]);
+
+    useEffect(() => {
+        // Pause/Play Song when IsPlaying Change
+        console.log("playlist change");
+    }, [songState.songs]);
 
     return (
         <div className="hidden">
@@ -35,7 +57,7 @@ function MusicPlayer({ timeSong, setTimeSong, audioRef }: any) {
                 controls
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedData={handleSongLoaded}
-                onEnded={() => pauseSongDispatch()}
+                onEnded={handleSongEnded}
             >
                 Your browser does not support the audio tag.
             </audio>

@@ -1,8 +1,8 @@
 import { createContext, useEffect, useReducer } from "react";
-import axios from "axios";
-import { LOCAL_STORAGE_TOKEN_NAME, apiUrl } from "./variables";
 import setAuthToken from "../untils/setAuthToken";
+import axios from "axios";
 import { authReducer } from "../reducers/authReducer";
+import { LOCAL_STORAGE_TOKEN_NAME, apiUrl } from "./variables";
 
 interface AuthContextType {
     // loadUser: () => Promise<any>;
