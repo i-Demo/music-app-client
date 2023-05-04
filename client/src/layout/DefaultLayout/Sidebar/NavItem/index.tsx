@@ -13,7 +13,7 @@ function NavItem({ to, icon, title }: NavItemType) {
                 isActive ? "navLink text-white bg-bg border-l-4 border-s-brown" : "navLink"
             }
         >
-            {icon} <span className="text-sm font-bold">{title}</span>
+            {icon} <span className="text-xs md:text-sm font-bold">{title}</span>
         </NavLink>
     );
 }

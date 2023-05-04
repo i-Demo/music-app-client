@@ -1,14 +1,21 @@
 import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import "moment/dist/locale/vi";
 import { BsChevronRight, BsFillPlayFill, BsThreeDots } from "react-icons/bs";
 import { SongContext } from "../../contexts/songContext";
-import { Link } from "react-router-dom";
 
 function NewSong({ songs }: any) {
     const [newSongsAll, newSongsVietnam, newSongsKorea, newSongsUsUk] = songs;
     const [currentActive, setCurrentActive] = useState({ tab: "all", songs: newSongsAll });
     const { songState, setSongDispatch, pauseSongDispatch } = useContext(SongContext);
-    useEffect(() => {}, []);
-    console.log(songState.songsRandom);
+
+    const dayFromNow = (song: any) => {
+        const year = new Date().getFullYear() - new Date(song.createdAt).getFullYear();
+        const month = new Date().getMonth() - new Date(song.createdAt).getMonth();
+        const date = new Date().getDate() - new Date(song.createdAt).getDate();
+        return year;
+    };
 
     return (
         <div>
@@ -104,9 +111,7 @@ function NewSong({ songs }: any) {
                                         {song.name}
                                     </h2>
                                     <p className="text-xs opacity-50 whitespace-nowrap truncate">{song.artist}</p>
-                                    <span className="text-xs opacity-50">{`${
-                                        new Date().getDate() - new Date(song.createdAt).getDate()
-                                    } ngày trước`}</span>
+                                    <span className="text-xs opacity-50">{`${moment(song.createdAt).fromNow()}`}</span>
                                 </div>
                             </div>
                             <div className="rounded-full invisible w-[38px] min-w-[38px] h-[38px] flex justify-center items-center cursor-pointer group-hover:visible hover:bg-bgMore">

@@ -3,6 +3,7 @@ import { AuthContext } from "../../contexts/authContext";
 import defaultAvatar from "@assets/images/defaultAvatar.png";
 import ModalEditProfile from "./ModalEditProfile";
 import { average } from "color.js";
+import Header from "../../components/Header";
 
 function Profile() {
     const {
@@ -41,22 +42,28 @@ function Profile() {
     });
     return (
         <div>
-            <div className="spaceHeader profileHeader flex flex-col md:flex-row gap-12 pl-14 ">
+            <Header offsetBg={212} offsetContent={212}>
+                <div className="text-2xl font-bold">{user.name}</div>
+            </Header>
+            <div className="spaceHeader profileHeader flex gap-4 md:gap-12 pl-14 ">
                 <div
                     className="lg:w-[232px] lg:h-[232px] w-48 h-48 min-w-[192px] rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,_0,_0,_0.7)] cursor-pointer"
                     onClick={showProfileModal}
                 >
-                    <img
-                        src={avatar}
-                        alt="Avatar"
-                        className=" object-cover lg:w-[232px] lg:h-[232px] w-48 h-48"
-                    />
+                    <img src={avatar} alt="Avatar" className=" object-cover lg:w-[232px] lg:h-[232px] w-48 h-48" />
                 </div>
-                <div className="flex flex-col flex-wrap justify-end md:gap-4 pb-4">
+                <div className="flex flex-col flex-wrap justify-end lg:gap-4">
                     <span className="text-sm font-bold">Hồ sơ</span>
                     <p className="text-7xl font-bold my-2 md:text-8xl cursor-pointer" onClick={showProfileModal}>
                         {user.name}
                     </p>
+
+                    <button
+                        className="text-primary h-10 w-32 rounded-full font-semibold opacity-90 hover:opacity-100 shadow-lg shadow-brown bg-transparent bg-white hover:scale-105"
+                        onClick={showProfileModal}
+                    >
+                        Sửa hồ sơ
+                    </button>
                 </div>
             </div>
             <div className="spaceContent w-2/3 mx-auto">
@@ -84,14 +91,6 @@ function Profile() {
                         </tr>
                     </tbody>
                 </table>
-                <div className="w-full mt-4 flex justify-end">
-                    <button
-                        className="btn shadow-lg shadow-brown bg-white hover:scale-105 mt-8 w-48"
-                        onClick={showProfileModal}
-                    >
-                        Chỉnh sửa hồ sơ
-                    </button>
-                </div>
             </div>
 
             {isShowModal && <ModalEditProfile showUpdateModal={setIsShowModal} onClick={hideProfileModal} />}

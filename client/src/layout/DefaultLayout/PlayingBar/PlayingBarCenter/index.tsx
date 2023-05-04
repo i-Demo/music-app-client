@@ -28,15 +28,15 @@ function PlayingBarCenter({ timeSong, setTimeSong, audioRef }: any) {
     // Handle when click button next song
     const handleNextSong = () => {
         if (listSong.indexOf(songState.song) === listSong.length - 1) {
-            setSongDispatch(listSong[0], songState.songs);
+            setSongDispatch(listSong[0], songState.songs, songState.listSongsId);
         } else {
-            setSongDispatch(listSong[listSong.indexOf(songState.song) + 1], songState.songs);
+            setSongDispatch(listSong[listSong.indexOf(songState.song) + 1], songState.songs, songState.listSongsId);
         }
     };
 
     // Handle when click button previous song
     const handlePreviousSong = () => {
-        setSongDispatch(listSong[listSong.indexOf(songState.song) - 1], songState.songs);
+        setSongDispatch(listSong[listSong.indexOf(songState.song) - 1], songState.songs, songState.listSongsId);
     };
 
     useEffect(() => {

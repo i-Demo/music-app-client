@@ -6,7 +6,7 @@ import { LOCAL_STORAGE_SONG_STATE_NAME, apiUrl } from "./variables";
 interface songContextType {
     getNewSongs: (data: object) => Promise<any>;
     songState: any;
-    setSongDispatch: (song: object, songs: object[]) => void;
+    setSongDispatch: (song: object, songs: object[], listSongsId?: string) => void;
     playSongDispatch: () => void;
     pauseSongDispatch: () => void;
     repeatSongDispatch: (repeat: string) => void;
@@ -25,13 +25,13 @@ function SongContextProvider({ children }: Props) {
         isRandom: false,
         song: "",
         songs: [],
+        listSongsId: "",
         songsRandom: [],
-        playlist: "",
     });
 
     console.log(songState);
 
-    const setSongDispatch = (song: object, songs: object[], playlist: string = "") => {
+    const setSongDispatch = (song: object, songs: object[], listSongsId = "") => {
         if (songState.isRandom && songState.songs !== songs) {
             const temp = songs.slice(0);
             const shuffledArray = temp.sort((a: any, b: any) => 0.5 - Math.random());
@@ -44,7 +44,7 @@ function SongContextProvider({ children }: Props) {
         const songInfo = {
             song: song,
             songs: songs,
-            playlist: playlist,
+            listSongsId: listSongsId,
         };
         localStorage.setItem(LOCAL_STORAGE_SONG_STATE_NAME, JSON.stringify(songInfo));
         dispatch({
@@ -111,7 +111,7 @@ function SongContextProvider({ children }: Props) {
     useEffect(() => {
         if (localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME)) {
             const storageSong = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME) || "{}");
-            setSongDispatch(storageSong.song, storageSong.songs, storageSong.playlist);
+            setSongDispatch(storageSong.song, storageSong.songs, storageSong.listSongsId);
             pauseSongDispatch();
         }
     }, []);

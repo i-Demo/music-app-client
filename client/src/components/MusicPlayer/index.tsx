@@ -26,11 +26,11 @@ function MusicPlayer({ timeSong, setTimeSong, audioRef }: any) {
             audioRef.current.currentTime = 0;
             audioRef.current.play();
         } else if (songState.repeat === "all" && currentIndex === listSong.length - 1) {
-            setSongDispatch(listSong[0], songState.songs);
+            setSongDispatch(listSong[0], songState.songs, songState.listSongsId);
         } else if (songState.repeat === "none" && currentIndex === listSong.length - 1) {
             pauseSongDispatch();
         } else {
-            setSongDispatch(listSong[currentIndex + 1], songState.songs);
+            setSongDispatch(listSong[currentIndex + 1], songState.songs, songState.listSongsId);
         }
     };
 

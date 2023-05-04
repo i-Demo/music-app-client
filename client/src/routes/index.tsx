@@ -1,6 +1,7 @@
 import Auth from "../pages/Auth";
 import CreateSong from "../pages/CreateSong";
 import DashBoard from "../pages/DashBoard";
+import NewPublish from "../pages/NewPublish";
 import Preferences from "../pages/Preferences";
 import Profile from "../pages/Profile";
 
@@ -18,7 +19,7 @@ const privateRoutes = [
     { path: "/preferences", element: <Preferences /> },
     { path: "/profile", element: <Profile /> },
     { path: "/search", element: <DashBoard /> },
-    { path: "/newPublish", element: <DashBoard /> },
+    { path: "/newPublish", element: <NewPublish /> },
     { path: "/top100", element: <DashBoard /> },
     { path: "/mv", element: <DashBoard /> },
     { path: "/library/favorite", element: <DashBoard /> },

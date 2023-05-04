@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Tippy from "@tippyjs/react/headless";
 import { useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
-import { AuthContext } from "../../../../contexts/authContext";
+import { AuthContext } from "../../../contexts/authContext";
 
 function Menu({ children }: { children: JSX.Element }) {
     const { logoutUser } = useContext(AuthContext);

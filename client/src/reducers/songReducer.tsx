@@ -1,7 +1,7 @@
 export const songReducer = (state: any, action: { type: string; payload: any }) => {
     const {
         type,
-        payload: { song, songs, repeat },
+        payload: { song, songs, listSongsId, repeat },
     } = action;
 
     switch (type) {
@@ -11,6 +11,7 @@ export const songReducer = (state: any, action: { type: string; payload: any }) 
                 isPlaying: true,
                 song,
                 songs,
+                listSongsId,
             };
         case "SET_PLAY":
             return {

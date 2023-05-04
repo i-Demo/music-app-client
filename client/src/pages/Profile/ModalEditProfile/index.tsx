@@ -17,9 +17,10 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
         gender: user.gender || "",
         birthday: user.birthday || "",
     });
+    const { avatar, name, gender, birthday } = profileData;
+
     const [base64, setBase64] = useState<any>("");
     const [alert, setAlert] = useState<TypeAlert | null>(null);
-    const { avatar, name, gender, birthday } = profileData;
     const [isUpdating, setIsUpdating] = useState(false);
 
     const onChangeProfileData = (e: { target: { name: string; value: string } }) => {
@@ -53,6 +54,7 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
     // Xu ly khi click chon anh moi
     const handlePreviewAvatar = (e: any) => {
         const file = e.target.files[0];
+        console.log(file)
         file.preview = URL.createObjectURL(file);
         convertBase64(file).then((data) => {
             setBase64(data);
@@ -141,6 +143,7 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
                                 className="inputModal"
                                 value={name}
                                 onChange={onChangeProfileData}
+                                required
                             />
                         </div>
                         <div className="relative group">

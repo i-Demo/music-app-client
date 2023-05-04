@@ -54,10 +54,10 @@
         @apply absolute top-[-10px] left-3 text-xs text-tGray bg-bg opacity-0;
     }
     .spaceHeader {
-        @apply flex px-8 pt-20 pb-8;
+        @apply flex min-w-[520px] h-[340px] pl-4 lg:px-8 pt-28 lg:pt-20 pb-8;
     }
     .spaceContent {
-        @apply px-8 py-6;
+        @apply pl-4 lg:px-8 py-6;
     }
 }
 
