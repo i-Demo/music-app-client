@@ -9,6 +9,9 @@ import { MdOutlinePause, MdPlayArrow } from "react-icons/md";
 import { BsFillPlayFill } from "react-icons/bs";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
+import TippyHeadless from "../../components/TippyHeadless";
+import { AuthContext } from "../../contexts/authContext";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 interface dataSongsType {
     newSongsAll: [];
@@ -25,8 +28,27 @@ function NewPublish() {
         newSongsKorea: [],
         newSongsUsUk: [],
     });
-    const { songState, getNewSongs, setSongDispatch, playSongDispatch, pauseSongDispatch } = useContext(SongContext);
+    const { songState, getNewSongs, setSongDispatch, playSongDispatch, pauseSongDispatch, likeSong } =
+        useContext(SongContext);
+    const { authState, authDispatch } = useContext(AuthContext);
     const [currentActive, setCurrentActive] = useState({ tab: "all", songs: dataSongs.current.newSongsAll });
+
+    // Convert Time Song from Number to "00:00"
+    const convertTime = (time: number) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time - minutes * 60);
+        const stringTime = `${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+        return stringTime;
+    };
+    // Handle Like Song
+    const handleClickLikeSong = async (idSong: string) => {
+        try {
+            const responseData = await likeSong(idSong);
+            authDispatch(responseData.user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         Promise.all([
@@ -209,7 +231,7 @@ function NewPublish() {
                                             songState.song._id !== song._id ||
                                             !songState.isPlaying) && (
                                             <Tippy
-                                                content="Phát nếu lúc đó của tlinh"
+                                                content={`Phát ${song.name} của ${song.artist}`}
                                                 delay={[0, 0]}
                                                 className="tooltip text-xs"
                                             >
@@ -266,17 +288,38 @@ function NewPublish() {
                                 ).fromNow()}`}</div>
 
                                 <div className="w-[30%] md:w-[20%] lg:w-[15%] flex justify-around">
-                                    <Tippy content="Lưu vào thư viện" delay={[200, 0]} className="tooltip">
-                                        <button className="opacity-70 hover:opacity-100 invisible group-hover:visible">
-                                            <SlHeart className="text-lg font-bold" />
+                                    <Tippy
+                                        content={
+                                            authState.user.likedSongs.findIndex(
+                                                (songInfo: { id: string }) => songInfo.id === song._id
+                                            ) !== -1
+                                                ? "Xoá khỏi thư viện"
+                                                : "Lưu vào thư viện"
+                                        }
+                                        delay={[200, 0]}
+                                        className="tooltip"
+                                    >
+                                        <button
+                                            className="opacity-70 hover:opacity-100 invisible group-hover:visible"
+                                            onClick={() => handleClickLikeSong(song._id)}
+                                        >
+                                            {authState.user.likedSongs.findIndex(
+                                                (songInfo: { id: string }) => songInfo.id === song._id
+                                            ) !== -1 ? (
+                                                <AiFillHeart className="text-xl text-btn" />
+                                            ) : (
+                                                <AiOutlineHeart className="text-xl" />
+                                            )}
                                         </button>
                                     </Tippy>
-                                    <span className="group-hover:text-tGray">4:24</span>
-                                    <Tippy content="Khác" delay={[200, 0]} className="tooltip">
-                                        <button className="opacity-70 hover:opacity-100 invisible group-hover:visible">
-                                            <SlOptions className="text-base" />
-                                        </button>
-                                    </Tippy>
+                                    <span className="group-hover:text-tGray">{convertTime(song.duration)}</span>
+                                    <TippyHeadless idSong={song._id}>
+                                        <Tippy content="Khác" delay={[200, 0]} className="tooltip">
+                                            <button className="opacity-70 hover:opacity-100 invisible group-hover:visible">
+                                                <SlOptions className="text-base" />
+                                            </button>
+                                        </Tippy>
+                                    </TippyHeadless>
                                 </div>
                             </div>
                         );

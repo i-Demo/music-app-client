@@ -1,21 +1,17 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "moment/dist/locale/vi";
 import { BsChevronRight, BsFillPlayFill, BsThreeDots } from "react-icons/bs";
 import { SongContext } from "../../contexts/songContext";
+import Tippy from "@tippyjs/react";
+import TippyHeadless from "../../components/TippyHeadless";
 
 function NewSong({ songs }: any) {
     const [newSongsAll, newSongsVietnam, newSongsKorea, newSongsUsUk] = songs;
     const [currentActive, setCurrentActive] = useState({ tab: "all", songs: newSongsAll });
     const { songState, setSongDispatch, pauseSongDispatch } = useContext(SongContext);
-
-    const dayFromNow = (song: any) => {
-        const year = new Date().getFullYear() - new Date(song.createdAt).getFullYear();
-        const month = new Date().getMonth() - new Date(song.createdAt).getMonth();
-        const date = new Date().getDate() - new Date(song.createdAt).getDate();
-        return year;
-    };
+    const moreRef = useRef(null);
 
     return (
         <div>
@@ -69,7 +65,8 @@ function NewSong({ songs }: any) {
                     return (
                         <div
                             key={index}
-                            className={`group col-span-1 p-[10px] rounded text-sm font-normal flex justify-between items-center hover:bg-bgTooltip ${
+                            tabIndex={0}
+                            className={`group col-span-1 p-[10px] rounded text-sm font-normal flex justify-between items-center hover:bg-bgTooltip focus-within:bg-bgTooltip ${
                                 songState.song._id === song._id ? "bg-bgTooltip" : "bg-[#181818]"
                             }`}
                             onDoubleClick={() => setSongDispatch(song, currentActive.songs)}
@@ -92,7 +89,7 @@ function NewSong({ songs }: any) {
                                         )}
                                         {(songState.song._id !== song._id || !songState.isPlaying) && (
                                             <div
-                                                className={`w-full h-full flex items-center justify-center ${
+                                                className={`w-full h-full flex items-center justify-center group-focus:visible ${
                                                     songState.song._id === song._id ? "visible" : ""
                                                 }`}
                                                 onClick={() => setSongDispatch(song, currentActive.songs)}
@@ -104,7 +101,7 @@ function NewSong({ songs }: any) {
                                 </div>
                                 <div className="overflow-hidden lg:max-w-[200px] lg:group-hover:max-w-[160px] max-w-[160px] group-hover:max-w-[120px]">
                                     <h2
-                                        className={`font-medium whitespace-nowrap truncate ${
+                                        className={`font-medium whitespace-nowrap truncate focus-within:bg-violet-700 ${
                                             songState.song._id === song._id ? "text-btn" : ""
                                         }`}
                                     >
@@ -114,9 +111,15 @@ function NewSong({ songs }: any) {
                                     <span className="text-xs opacity-50">{`${moment(song.createdAt).fromNow()}`}</span>
                                 </div>
                             </div>
-                            <div className="rounded-full invisible w-[38px] min-w-[38px] h-[38px] flex justify-center items-center cursor-pointer group-hover:visible hover:bg-bgMore">
-                                <BsThreeDots className="" />
-                            </div>
+                            <TippyHeadless idSong={song._id}>
+                                <div className="rounded-full invisible w-[38px] min-w-[38px] h-[38px] flex justify-center items-center cursor-pointer group-hover:visible hover:bg-bgMore group-focus:visible">
+                                    <Tippy content="Khác" delay={[0, 0]} className="tooltip text-xs">
+                                        <button className="more focus:visible">
+                                            <BsThreeDots />
+                                        </button>
+                                    </Tippy>
+                                </div>
+                            </TippyHeadless>
                         </div>
                     );
                 })}

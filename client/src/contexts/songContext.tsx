@@ -11,6 +11,8 @@ interface songContextType {
     pauseSongDispatch: () => void;
     repeatSongDispatch: (repeat: string) => void;
     randomSongDispatch: () => void;
+    likeSong: (songId: string) => Promise<any>;
+    likedSongs: () => Promise<any>;
 }
 export const SongContext = createContext({} as songContextType);
 
@@ -103,8 +105,30 @@ function SongContextProvider({ children }: Props) {
             const response = await axios.get(`${apiUrl}/songs/new-song`, { params: data });
             if (response.data.success) return response.data.songs;
         } catch (error: any) {
-            console.log(error);
-            return { success: false, message: error.message };
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
+    // CALL API like-song
+    const likeSong = async (songId: string) => {
+        try {
+            const response = await axios.put(`${apiUrl}/songs/like-song`, { songId: songId });
+            if (response.data.success) return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
+    // CALL API liked-songs
+    const likedSongs = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/songs/liked-songs`);
+            if (response.data.success) return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
         }
     };
 
@@ -117,7 +141,9 @@ function SongContextProvider({ children }: Props) {
     }, []);
 
     const songContextData = {
+        likeSong,
         getNewSongs,
+        likedSongs,
         songState,
         setSongDispatch,
         playSongDispatch,

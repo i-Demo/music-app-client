@@ -43,11 +43,23 @@ function DashBoard() {
     return (
         <>
             <Header offsetBg={0} />
-            <div className="pl-4 lg:px-8 lg:pt-20 pb-8 pt-16 flex flex-col min-w-[528px]" ref={scrollRef}>
+            <div className="pl-4 lg:px-8 lg:pt-20 pb-8 pt-16 flex flex-col gap-8 min-w-[528px]" ref={scrollRef}>
                 <div className="mx-6 mb-8 bg-white h-72 rounded-md p-2">
                     <h2 className="text-primary">title</h2>
                 </div>
                 <NewSong songs={dataSongs.newSongs} />
+                <div>
+                    <h2 className="text-2xl font-bold mb-5">Chill</h2>
+                </div>
+                <div>
+                    <h2 className="text-2xl font-bold mb-5">Lofi</h2>
+                </div>
+                <div>
+                    <h2 className="text-2xl font-bold mb-5">EDM</h2>
+                </div>
+                <div>
+                    <h2 className="text-2xl font-bold mb-5">Bảng xếp hạng Nổi bật</h2>
+                </div>
             </div>
         </>
     );

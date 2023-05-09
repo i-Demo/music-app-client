@@ -19,7 +19,7 @@ function Header({ children, offsetBg, offsetContent }: any) {
         const header = document.querySelector(".header") as HTMLElement;
         const contentHeader = document.querySelector(".contentHeader") as HTMLElement;
 
-        if (dashboard.scrollTop === 0) {
+        if (offsetContent === 0) {
             contentHeader.style.display = "block";
         }
 

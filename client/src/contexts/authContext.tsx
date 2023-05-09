@@ -11,6 +11,7 @@ interface AuthContextType {
     logoutUser: () => void;
     updateProfile: (data: object) => Promise<any>;
     authState: any;
+    authDispatch: (user: any) => void;
 }
 export const AuthContext = createContext({} as AuthContextType);
 
@@ -23,13 +24,14 @@ function AuthContextProvider({ children }: Props) {
         isAuthenticated: false,
         user: null,
     });
+    console.log(authState)
 
-    const authDispatch = (response: any) => {
+    const authDispatch = (user: any) => {
         dispatch({
             type: "SET_AUTH",
             payload: {
                 isAuthenticated: true,
-                user: response.data.user,
+                user: user,
             },
         });
     };
@@ -53,7 +55,7 @@ function AuthContextProvider({ children }: Props) {
             try {
                 const response = await axios.get(`${apiUrl}/auth`);
                 if (response.data.success) {
-                    authDispatch(response);
+                    authDispatch(response.data.user);
                 }
             } catch (error: any) {
                 localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
@@ -70,7 +72,7 @@ function AuthContextProvider({ children }: Props) {
             if (response.data.success) {
                 localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken);
                 setAuthToken(localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME));
-                authDispatch(response);
+                authDispatch(response.data.user);
             }
             return response.data;
         } catch (error: any) {
@@ -86,7 +88,7 @@ function AuthContextProvider({ children }: Props) {
             if (response.data.success) {
                 localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken);
                 setAuthToken(localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME));
-                authDispatch(response);
+                authDispatch(response.data.user);
             }
             return response.data;
         } catch (error: any) {
@@ -107,7 +109,7 @@ function AuthContextProvider({ children }: Props) {
         try {
             const response = await axios.put(`${apiUrl}/auth/update-profile`, dataProfile);
             if (response.data.success) {
-                authDispatch(response);
+                authDispatch(response.data.user);
                 return response.data;
             }
         } catch (error: any) {
@@ -116,7 +118,7 @@ function AuthContextProvider({ children }: Props) {
         }
     };
 
-    const authContextData = { registerUser, loginUser, logoutUser, updateProfile, authState };
+    const authContextData = { registerUser, loginUser, logoutUser, updateProfile, authState, authDispatch };
 
     useEffect(() => {
         loadUser();

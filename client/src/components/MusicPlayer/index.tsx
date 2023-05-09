@@ -16,7 +16,7 @@ function MusicPlayer({ timeSong, setTimeSong, audioRef }: any) {
 
     // Load time Song when Song Loaded
     const handleSongLoaded = (e: any) => {
-        setTimeSong({ ...timeSong, duration: Math.floor(e.target.duration) });
+        setTimeSong({ ...timeSong, duration: songState.song.duration || Math.floor(e.target.duration) });
     };
 
     // Load time Song when Song Loaded

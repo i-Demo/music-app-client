@@ -39,7 +39,7 @@ function Profile() {
                 profileHeader.style.boxShadow = `0 50px 200px ${color}`;
             }
         });
-    });
+    }, []);
     return (
         <div>
             <Header offsetBg={212} offsetContent={212}>

@@ -4,11 +4,26 @@ import { Link } from "react-router-dom";
 import { SlHeart, SlOptions } from "react-icons/sl";
 import defaultSongImage from "@assets/images/defaultSongImage.png";
 import { SongContext } from "../../../../contexts/songContext";
+import { AuthContext } from "../../../../contexts/authContext";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 function PlayingBarLeft() {
     const {
         songState: { song },
+        likeSong,
     } = useContext(SongContext);
+    const { authState, authDispatch } = useContext(AuthContext);
+
+    // Handle Like Song
+    const handleClickLikeSong = async (idSong: string) => {
+        try {
+            const responseData = await likeSong(idSong);
+            authDispatch(responseData.user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="min-w-[180px] w-[30%] max-w-[30%] flex justify-start items-center gap-4 pr-4">
             <div>
@@ -29,9 +44,17 @@ function PlayingBarLeft() {
                 </Link>
             </div>
             <div className="flex gap-3 ml-2">
-                <Tippy content="Lưu vào thư viện" delay={[200, 0]} className="tooltip">
-                    <button className="opacity-70 hover:opacity-100">
-                        <SlHeart />
+                <Tippy
+                    content={authState.user.likedSongs.includes(song._id) ? "Xoá khỏi thư viện" : "Lưu vào thư viện"}
+                    delay={[200, 0]}
+                    className="tooltip"
+                >
+                    <button className="opacity-70 hover:opacity-100" onClick={() => handleClickLikeSong(song._id)}>
+                        {authState.user.likedSongs.includes(song._id) ? (
+                            <AiFillHeart className="text-xl text-btn" />
+                        ) : (
+                            <AiOutlineHeart className="text-xl" />
+                        )}
                     </button>
                 </Tippy>
                 <Tippy content="Khác" delay={[200, 0]} className="tooltip">

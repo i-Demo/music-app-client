@@ -1,5 +1,4 @@
 import logo from "@assets/images/logo2.svg";
-import { Link } from "react-router-dom";
 function NotFound() {
     return (
         <div className="bg-primary w-screen h-screen flex flex-col justify-center items-center gap-4">
