@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import { AuthContext } from "../../contexts/authContext";
 import { SongContext } from "../../contexts/songContext";
@@ -9,6 +9,7 @@ import FavoriteImg from "@assets/images/favorite.png";
 import Loading from "../../components/Loading";
 import SongsItem from "../components/SongsItem";
 import Header from "../../components/Header";
+import ActionSidebar from "../components/ActionSidebar";
 
 function Favorite() {
     const { authState } = useContext(AuthContext);
@@ -18,21 +19,21 @@ function Favorite() {
         songs: [],
         addedAt: [],
     });
+    const navigate = useNavigate();
 
     const getLikedSongs = async () => {
         const data = await likedSongs();
         if (data.success) {
-            console.log(data.songs);
             setFavoriteSongs({
                 songs: data.songs,
                 addedAt: data.addedAt,
             });
             setIsLoading(false);
         } else {
-            <Navigate to="/error" />;
+            navigate("/error");
         }
     };
-    // console.log(songs)
+
     useEffect(() => {
         getLikedSongs();
     }, [authState.user.likedSongs]);
@@ -54,8 +55,7 @@ function Favorite() {
                         <button
                             className="text-primary bg-btn rounded-full w-12 h-12 flex justify-center items-center hover:scale-105"
                             onClick={
-                                songState.listSongsId === "favorite" &&
-                                authState.user.likedSongs.indexOf(songState.song._id) === 1
+                                songState.listSongsId === "favorite"
                                     ? () => playSongDispatch()
                                     : () => setSongDispatch(favoriteSongs.songs[0], favoriteSongs.songs, "favorite")
                             }
@@ -73,8 +73,9 @@ function Favorite() {
                 name="Bài hát đã thích"
                 desc=""
                 avatar={authState.user.avatar}
-                user={authState.user.name}
-                numberSongs={authState.user.likedSongs.length}
+                userID={authState.user._id}
+                userName={authState.user.name}
+                songs={favoriteSongs.songs}
             />
             {authState.user.likedSongs.length === 0 ? (
                 <div className="flex flex-col items-center gap-6 pt-12 px-4">
@@ -89,34 +90,10 @@ function Favorite() {
                     </Link>
                 </div>
             ) : (
-                <div>
-                    <div className="spaceContent">
-                        {songState.isPlaying && songState.listSongsId === "favorite" && (
-                            <button
-                                className="text-primary bg-btn rounded-full w-14 h-14 flex justify-center items-center hover:scale-105"
-                                onClick={() => pauseSongDispatch()}
-                            >
-                                <MdOutlinePause className="text-4xl" />
-                            </button>
-                        )}
-                        {(!songState.isPlaying || songState.listSongsId !== "favorite") && (
-                            <button
-                                className="text-primary bg-btn rounded-full w-14 h-14 flex justify-center items-center hover:scale-105"
-                                onClick={
-                                    songState.listSongsId === "favorite" &&
-                                    authState.user.likedSongs.indexOf(songState.song._id) === 1
-                                        ? () => playSongDispatch()
-                                        : () => setSongDispatch(favoriteSongs.songs[0], favoriteSongs.songs, "favorite")
-                                }
-                            >
-                                <MdPlayArrow className="text-4xl" />
-                            </button>
-                        )}
-                    </div>
-                    <div className="spaceContent text-sm text-tGray">
-                        <SongsItem songs={favoriteSongs.songs} addedAt={favoriteSongs.addedAt} />
-                    </div>
-                </div>
+                <>
+                    <ActionSidebar songs={favoriteSongs.songs} id="favorite" />
+                    <SongsItem songs={favoriteSongs.songs} id="favorite" addedAt={favoriteSongs.addedAt} />
+                </>
             )}
         </div>
     );

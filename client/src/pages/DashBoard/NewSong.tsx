@@ -1,17 +1,16 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "moment/dist/locale/vi";
 import { BsChevronRight, BsFillPlayFill, BsThreeDots } from "react-icons/bs";
 import { SongContext } from "../../contexts/songContext";
 import Tippy from "@tippyjs/react";
-import TippyHeadless from "../../components/TippyHeadless";
+import TippyHeadless from "../../components/SongOptions";
 
 function NewSong({ songs }: any) {
     const [newSongsAll, newSongsVietnam, newSongsKorea, newSongsUsUk] = songs;
     const [currentActive, setCurrentActive] = useState({ tab: "all", songs: newSongsAll });
     const { songState, setSongDispatch, pauseSongDispatch } = useContext(SongContext);
-    const moreRef = useRef(null);
 
     return (
         <div>

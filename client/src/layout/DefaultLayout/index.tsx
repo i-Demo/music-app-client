@@ -11,9 +11,9 @@ function DefaultLayout({ children }: any) {
         <div className="w-screen h-screen max-h-screen overflow-hidden flex flex-col">
             <div className="flex flex-row flex-1 overflow-hidden">
                 <Sidebar />
-                <div className="flex-1 relative">
+                <div className="flex-1 relative p-2 bg-bgDashboard">
                     <div
-                        className="dashboard bg-bgDashboard h-[calc(100vh-90px)] overflow-y-auto scroll-smooth overflow-x-hidden w-full scrollbar "
+                        className="dashboard min-w-[500px] h-[calc(100vh-90px)] overflow-y-auto scroll-smooth overflow-x-hidden w-full smallScrollbar rounded-lg"
                         ref={scrollRef}
                     >
                         {children}

@@ -86,7 +86,7 @@ function Menu({ children }: { children: JSX.Element }) {
             delay={[0, 0]}
             placement="bottom-end"
             render={(attrs) => (
-                <div className="tooltip flex flex-col p-1 min-w-[196px] min-h-max" {...attrs}>
+                <div className="tooltip flex flex-col p-1 min-w-[196px] min-h-max z-[9999]" {...attrs}>
                     {history.length > 1 && (
                         <div className="flex items-center px-4 gap-4 my-1">
                             <button

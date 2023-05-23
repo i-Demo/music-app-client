@@ -16,20 +16,21 @@ function Header({ children, offsetBg, offsetContent }: any) {
 
     useEffect(() => {
         const dashboard = document.querySelector(".dashboard") as HTMLElement;
-        const header = document.querySelector(".header") as HTMLElement;
+        const bgHeader = document.querySelector(".bgHeader") as HTMLElement;
         const contentHeader = document.querySelector(".contentHeader") as HTMLElement;
 
         if (offsetContent === 0) {
             contentHeader.style.display = "block";
-        }
+            bgHeader.style.opacity = "1";
+        } 
 
         const handleScroll = () => {
             if (dashboard.scrollTop > offsetBg) {
-                header.style.backgroundColor = "#121212";
-                header.style.opacity = `${(dashboard.scrollTop - offsetBg) / 64}`;
+                bgHeader.style.backgroundColor = "#121212";
+                bgHeader.style.opacity = `${(dashboard.scrollTop - offsetBg) / 64}`;
             } else {
-                header.style.backgroundColor = "transparent";
-                header.style.opacity = "1";
+                bgHeader.style.backgroundColor = "transparent";
+                bgHeader.style.opacity = "1";
             }
 
             if (dashboard.scrollTop >= offsetContent) {
@@ -46,10 +47,11 @@ function Header({ children, offsetBg, offsetContent }: any) {
         };
     }, []);
     return (
-        <header className="header h-16 absolute top-0 right-0 left-0 z-[3] flex justify-between items-center px-10">
+        <header className="h-16 absolute top-0 right-0 left-0 z-[3] flex justify-between items-center px-10">
+            <div className="bgHeader absolute top-0 right-0 bottom-0 left-0 z-[-9999]"></div>
             <div className="text-xl flex items-center gap-4">
                 <Tippy delay={[200, 0]} content="Quay lại" placement="bottom" className="tooltip">
-                    <button className="btnRounded bg-primary" onClick={() => navigate(-1)}>
+                    <button className="btnRounded bg-primary opacity-100" onClick={() => navigate(-1)}>
                         <MdArrowBackIos className="ml-2" />
                     </button>
                 </Tippy>
@@ -73,7 +75,9 @@ function Header({ children, offsetBg, offsetContent }: any) {
                                 />
                             </div>
                             <span className="hidden md:block text-sm font-semibold whitespace-nowrap">{user.name}</span>
-                            <BiCaretDown />
+                            <span className="hidden md:block">
+                                <BiCaretDown />
+                            </span>
                         </button>
                     </Tippy>
                 </Menu>

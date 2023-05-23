@@ -21,6 +21,7 @@ export default {
                 bgModal: "rgba(0, 0, 0, 0.4)",
                 bgInput: "rgba(255, 255, 255, 0.1)",
                 bgMore: "#313131",
+                bgAnnounce: "#3d91f4",
             },
             backgroundImage: {
                 auth: "url('../src/assets/images/bgImage.jpg')",

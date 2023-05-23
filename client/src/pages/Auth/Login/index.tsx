@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineMail, AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { AuthContext } from "../../../contexts/authContext";
@@ -31,17 +31,23 @@ function Login() {
     // Handle when clicking registers
     const handleLogin = async (e: any) => {
         e.preventDefault();
-
         try {
             const dataLogin = await loginUser(loginData);
             if (!dataLogin.success) {
                 setAlert({ type: "danger", message: dataLogin.message });
-                setTimeout(() => setAlert(null), 2500);
             }
         } catch (error) {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        let timer: string | number | NodeJS.Timeout | undefined;
+        if (alert) {
+            timer = setTimeout(() => setAlert(null), 3000);
+        }
+        return () => clearTimeout(timer);
+    }, [alert]);
 
     return (
         <>

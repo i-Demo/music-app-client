@@ -1,6 +1,6 @@
 export const authReducer = (
-    state: object,
-    action: { type: string; payload: { isAuthenticated: boolean; user: object | null } }
+    state: any,
+    action: { type: string; payload: { isAuthenticated?: boolean; user: object | null } }
 ) => {
     const {
         type,
@@ -13,6 +13,11 @@ export const authReducer = (
                 ...state,
                 isAuthLoading: false,
                 isAuthenticated,
+                user,
+            };
+        case "SET_USER":
+            return {
+                ...state,
                 user,
             };
 

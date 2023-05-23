@@ -42,13 +42,13 @@
         @apply rounded-full flex justify-center items-center w-8 h-8;
     }
     .tooltip {
-        @apply bg-[#323232] text-white p-[6px] rounded-[4px] text-sm font-semibold;
+        @apply bg-[#282828] text-white p-[6px] rounded-[4px] text-sm font-semibold z-[9999];
     }
     .menu {
         @apply bg-transparent rounded-sm cursor-default h-10 flex justify-between items-center gap-2 p-3 text-start hover:bg-secondary;
     }
     .inputModal {
-        @apply bg-bgInput h-10 px-3 rounded-md text-sm w-full outline-none focus:border focus:border-[#535353] focus:bg-[#333];
+        @apply bg-bgInput h-10 px-3 rounded-md text-sm w-full outline-none border border-transparent focus:border-[#535353] focus:bg-[#333];
     }
     .labelModal {
         @apply absolute top-[-10px] left-3 text-xs text-tGray bg-bg opacity-0;
@@ -63,30 +63,38 @@
 
 @layer utilities {
     .scrollbar::-webkit-scrollbar {
-        width: 10px;
+        width: 6px;
         height: 10px;
     }
-
-    .scrollbarHide::-webkit-scrollbar {
-        display: none;
-    }
-
     .scrollbar::-webkit-scrollbar-track {
         border-radius: 5px;
         background: transparent;
     }
-
     .scrollbar::-webkit-scrollbar-thumb {
         background: #b3b3b3;
         visibility: hidden;
     }
-
     .scrollbar:hover::-webkit-scrollbar-thumb {
         visibility: visible;
     }
-
     .scrollbar::-webkit-scrollbar-thumb:hover {
         background: #dadada;
+    }
+
+    .smallScrollbar::-webkit-scrollbar {
+        width: 1px;
+        height: 10px;
+    }
+    .smallScrollbar::-webkit-scrollbar-thumb {
+        background: #b3b3b3;
+        visibility: hidden;
+    }
+    .smallScrollbar:hover::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+
+    .scrollbarHide::-webkit-scrollbar {
+        display: none;
     }
 
     .range {
@@ -128,5 +136,14 @@
     .rangeHover::-webkit-slider-thumb {
         padding: 6px;
         transition: linear 0.1s;
+    }
+
+    .backgroundLinear {
+        background: linear-gradient(149.46deg, #450af5, #8e8ee5 99.16%);
+    }
+
+    .placehoder::placeholder {
+        color: "rgb(83, 83, 83)";
+        opacity: 0.7;
     }
 }

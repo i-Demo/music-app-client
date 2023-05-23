@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineMail, AiOutlineEyeInvisible, AiOutlineEye, AiOutlineQuestionCircle } from "react-icons/ai";
 // import { AuthContext } from '@authContext';
@@ -39,12 +39,19 @@ function Register() {
             const dataRegister = await registerUser(registerData);
             if (!dataRegister.success) {
                 setAlert({ type: "danger", message: dataRegister.message });
-                setTimeout(() => setAlert(null), 2500);
             }
         } catch (error) {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        let timer: string | number | NodeJS.Timeout | undefined;
+        if (alert) {
+            timer = setTimeout(() => setAlert(null), 3000);
+        }
+        return () => clearTimeout(timer);
+    }, [alert]);
 
     return (
         <>

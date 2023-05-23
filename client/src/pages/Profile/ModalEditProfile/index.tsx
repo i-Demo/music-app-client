@@ -24,6 +24,7 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
     const [isUpdating, setIsUpdating] = useState(false);
 
     const onChangeProfileData = (e: { target: { name: string; value: string } }) => {
+        if (alert) setAlert(null);
         setProfileData({
             ...profileData,
             [e.target.name]: e.target.value,
@@ -53,8 +54,8 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
 
     // Xu ly khi click chon anh moi
     const handlePreviewAvatar = (e: any) => {
+        if (alert) setAlert(null);
         const file = e.target.files[0];
-        console.log(file)
         file.preview = URL.createObjectURL(file);
         convertBase64(file).then((data) => {
             setBase64(data);
@@ -69,11 +70,10 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
     const handleUpdateProfile = async (e: any) => {
         e.preventDefault();
         setIsUpdating(true);
-        base64 ? (profileData.avatar = base64) : delete profileData.avatar;
+        if (base64) profileData.avatar = base64;
         try {
             const dataUpdated = await updateProfile(profileData);
             setIsUpdating(false);
-            profileData.avatar = user.avatar;
             if (dataUpdated.success) {
                 showUpdateModal(false);
             } else {
@@ -90,20 +90,20 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
         };
     }, [avatar]);
     return (
-        <div className="profileModal fixed top-0 left-0 right-0 bottom-0 bg-bgModal z-[9999]" onClick={onClick}>
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-bgModal z-[9999]" onClick={onClick}>
             <div
-                className="profileModalContainer absolute top-0 bottom-0 left-0 right-0 w-[524px] h-fit m-auto bg-bg rounded-xl p-6"
+                className="absolute top-0 bottom-0 left-0 right-0 w-[524px] h-fit m-auto bg-bg rounded-xl p-6"
                 onClick={handlePropagation}
             >
                 <h5 className="font-bold mb-4">Chi tiết hồ sơ</h5>
                 <form className="flex gap-4" onSubmit={handleUpdateProfile}>
-                    <div className="relative w-[180px] h-[180px] rounded-full overflow-hidden text-white font-semibold">
+                    <div className="group relative w-[180px] h-[180px] rounded-full overflow-hidden text-white font-semibold">
                         <img src={avatar || defaultAvatar} alt="Avatar" className="w-[180px] h-[180px]" />
-                        <div className="absolute top-0 right-0 bottom-0 left-0 m-auto flex flex-col justify-center items-center gap-4 bg-bgModal opacity-100 hover:opacity-100">
+                        <div className="absolute top-0 right-0 bottom-0 left-0 m-auto bg-bgModal opacity-100 hover:opacity-100">
                             {isUpdating ? (
                                 <Loading />
                             ) : (
-                                <>
+                                <div className="invisible group-hover:visible w-full h-full flex flex-col justify-center items-center gap-4">
                                     <div>
                                         <label htmlFor="avatarForm" className="hover:underline">
                                             Chọn ảnh
@@ -127,7 +127,7 @@ function ModalEditProfile({ showUpdateModal, onClick }: any) {
                                     >
                                         Xoá ảnh
                                     </button>
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>

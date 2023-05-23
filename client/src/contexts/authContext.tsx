@@ -9,9 +9,15 @@ interface AuthContextType {
     registerUser: (userData: object) => Promise<any>;
     loginUser: (userData: object) => Promise<any>;
     logoutUser: () => void;
+    getUser: (userId: string) => Promise<any>;
     updateProfile: (data: object) => Promise<any>;
     authState: any;
     authDispatch: (user: any) => void;
+    getPlaylists: (params: object) => Promise<any>;
+    createPlaylist: (playlistData: object) => Promise<any>;
+    editPlaylist: (idPlaylist: string, playlistData: object) => Promise<any>;
+    deletePlaylist: (idPlaylist: string) => Promise<any>;
+    togglePublic: (idPlaylist: string) => Promise<any>;
 }
 export const AuthContext = createContext({} as AuthContextType);
 
@@ -22,11 +28,11 @@ function AuthContextProvider({ children }: Props) {
     const [authState, dispatch] = useReducer(authReducer, {
         isAuthLoading: true,
         isAuthenticated: false,
-        user: null,
+        user: {},
     });
-    console.log(authState)
+    console.log(authState);
 
-    const authDispatch = (user: any) => {
+    const authDispatch = (user: object) => {
         dispatch({
             type: "SET_AUTH",
             payload: {
@@ -104,11 +110,27 @@ function AuthContextProvider({ children }: Props) {
         notAuthDispatch();
     };
 
+    // Get User by Id
+    const getUser = async (userId: string) => {
+        try {
+            const response = await axios.get(`${apiUrl}/auth/${userId}`);
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
     // Update profile user
     const updateProfile = async (dataProfile: object) => {
         try {
             const response = await axios.put(`${apiUrl}/auth/update-profile`, dataProfile);
             if (response.data.success) {
+                await axios.put(`${apiUrl}/playlists/user-update`, {
+                    myPlaylists: response.data.user.myPlaylists,
+                    userName: response.data.user.name,
+                    userAvatar: response.data.user.avatar,
+                });
                 authDispatch(response.data.user);
                 return response.data;
             }
@@ -118,7 +140,77 @@ function AuthContextProvider({ children }: Props) {
         }
     };
 
-    const authContextData = { registerUser, loginUser, logoutUser, updateProfile, authState, authDispatch };
+    // Get Playlists
+    const getPlaylists = async (params: object) => {
+        try {
+            const response = await axios.get(`${apiUrl}/playlists`, { params: params });
+            if (response.data.success) {
+                return response.data;
+            }
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+    // Create Playlist
+    const createPlaylist = async (playlistData: object) => {
+        try {
+            const response = await axios.post(`${apiUrl}/playlists`, playlistData);
+            authDispatch(response.data.user);
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+    // Edit Playlist
+    const editPlaylist = async (idPlaylist: string, playlistData: object) => {
+        try {
+            const response = await axios.put(`${apiUrl}/playlists/edit/${idPlaylist}`, playlistData);
+            authDispatch(response.data.user);
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+    // Delete Playlist by Id
+    const deletePlaylist = async (idPlaylist: string) => {
+        try {
+            const response = await axios.delete(`${apiUrl}/playlists/${idPlaylist}`);
+            authDispatch(response.data.user);
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+    // Toggle public of Playlist in User Profile
+    const togglePublic = async (idPlaylist: string) => {
+        try {
+            const response = await axios.put(`${apiUrl}/playlists/toggle-public/${idPlaylist}`);
+            authDispatch(response.data.user);
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
+    const authContextData = {
+        registerUser,
+        loginUser,
+        logoutUser,
+        getUser,
+        updateProfile,
+        authState,
+        authDispatch,
+        getPlaylists,
+        createPlaylist,
+        editPlaylist,
+        deletePlaylist,
+        togglePublic,
+    };
 
     useEffect(() => {
         loadUser();

@@ -13,6 +13,9 @@ interface songContextType {
     randomSongDispatch: () => void;
     likeSong: (songId: string) => Promise<any>;
     likedSongs: () => Promise<any>;
+    getSongsOfPlaylist: (id: string) => Promise<any>;
+    addSong: (playlistId: string, songId: string) => Promise<any>;
+    removeSong: (playlistId: string, songId: string) => Promise<any>;
 }
 export const SongContext = createContext({} as songContextType);
 
@@ -103,7 +106,7 @@ function SongContextProvider({ children }: Props) {
     const getNewSongs = async (data: object) => {
         try {
             const response = await axios.get(`${apiUrl}/songs/new-song`, { params: data });
-            if (response.data.success) return response.data.songs;
+            return response.data.songs;
         } catch (error: any) {
             if (error.response.data) return error.response.data;
             else return { success: false, message: error.message };
@@ -114,18 +117,57 @@ function SongContextProvider({ children }: Props) {
     const likeSong = async (songId: string) => {
         try {
             const response = await axios.put(`${apiUrl}/songs/like-song`, { songId: songId });
-            if (response.data.success) return response.data;
+            return response.data;
         } catch (error: any) {
             if (error.response.data) return error.response.data;
             else return { success: false, message: error.message };
         }
     };
 
-    // CALL API liked-songs
+    // CALL API Get all song liked
     const likedSongs = async () => {
         try {
             const response = await axios.get(`${apiUrl}/songs/liked-songs`);
-            if (response.data.success) return response.data;
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
+    // CALL API get songs of playlist
+    const getSongsOfPlaylist = async (id: string) => {
+        try {
+            const response = await axios.get(`${apiUrl}/playlists/${id}`);
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
+    // CALL API add song to playlist
+    const addSong = async (playlistId: string, songId: string) => {
+        try {
+            const response = await axios.put(`${apiUrl}/playlists/add-song`, {
+                playlistId: playlistId,
+                songId: songId,
+            });
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
+
+    // CALL API remove song from playlist
+    const removeSong = async (playlistId: string, songId: string) => {
+        try {
+            const response = await axios.put(`${apiUrl}/playlists/remove-song`, {
+                playlistId: playlistId,
+                songId: songId,
+            });
+            return response.data;
         } catch (error: any) {
             if (error.response.data) return error.response.data;
             else return { success: false, message: error.message };
@@ -150,6 +192,9 @@ function SongContextProvider({ children }: Props) {
         pauseSongDispatch,
         repeatSongDispatch,
         randomSongDispatch,
+        getSongsOfPlaylist,
+        addSong,
+        removeSong,
     };
     return <SongContext.Provider value={songContextData}>{children}</SongContext.Provider>;
 }

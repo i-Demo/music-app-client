@@ -43,11 +43,6 @@ function MusicPlayer({ timeSong, setTimeSong, audioRef }: any) {
         }
     }, [songState.isPlaying]);
 
-    useEffect(() => {
-        // Pause/Play Song when IsPlaying Change
-        console.log("playlist change");
-    }, [songState.songs]);
-
     return (
         <div className="hidden">
             <audio
