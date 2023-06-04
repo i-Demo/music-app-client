@@ -1,19 +1,25 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Tippy from "@tippyjs/react/headless";
 import { AuthContext } from "../../../contexts/authContext";
 import DeletePlaylistModal from "./DeletePlaylistModal";
-import ToastMessage from "../../../components/ToastMessage";
 
 interface PlaylistOptionsType {
     children: JSX.Element;
     playlist: any;
     setIsShowModalUpdate: any;
+    handleTogglePlaylist: () => Promise<any>;
+    setToast: React.Dispatch<JSX.Element>;
 }
-function PlaylistOptions({ children, playlist, setIsShowModalUpdate }: PlaylistOptionsType) {
+function PlaylistOptions({
+    children,
+    playlist,
+    setIsShowModalUpdate,
+    handleTogglePlaylist,
+    setToast,
+}: PlaylistOptionsType) {
     const { authState, togglePublic } = useContext(AuthContext);
     const [visible, setVisible] = useState(false);
     const [isShowModal, setIsShowModal] = useState(false);
-    const [toast, setToast] = useState<JSX.Element | null>(null);
 
     const handleTogglePublic = async (e: any) => {
         e.preventDefault();
@@ -28,14 +34,6 @@ function PlaylistOptions({ children, playlist, setIsShowModalUpdate }: PlaylistO
                   );
         }
     };
-
-    useEffect(() => {
-        let timer: string | number | NodeJS.Timeout | undefined;
-        if (toast) {
-            timer = setTimeout(() => setToast(null), 3000);
-        }
-        return () => clearTimeout(timer);
-    }, [toast]);
 
     return (
         <>
@@ -53,7 +51,7 @@ function PlaylistOptions({ children, playlist, setIsShowModalUpdate }: PlaylistO
                         {...attrs}
                         onClick={() => setVisible(false)}
                     >
-                        {authState.user._id === playlist.user ? (
+                        {authState.user._id === playlist.user && (
                             <>
                                 <button className="menu justify-start cursor-pointer" onClick={handleTogglePublic}>
                                     <span>
@@ -72,13 +70,22 @@ function PlaylistOptions({ children, playlist, setIsShowModalUpdate }: PlaylistO
                                     <span>Xoá</span>
                                 </button>
                             </>
-                        ) : (
+                        )}
+                        {authState.user._id !== playlist.user && (
                             <>
-                                <button className="menu justify-start cursor-pointer">
-                                    <span>Thêm vào hồ sơ</span>
-                                </button>
-                                <button className="menu justify-start cursor-pointer">
-                                    <span>Thêm vào thư viện</span>
+                                {authState.user.playlists.includes(playlist._id) && (
+                                    <button className="menu justify-start cursor-pointer" onClick={handleTogglePublic}>
+                                        <span>
+                                            {authState.user.publicPlaylists.includes(playlist._id)
+                                                ? "Xoá khỏi hồ sơ"
+                                                : "Thêm vào hồ sơ"}
+                                        </span>
+                                    </button>
+                                )}
+                                <button className="menu justify-start cursor-pointer" onClick={handleTogglePlaylist}>
+                                    {authState.user.playlists.includes(playlist._id)
+                                        ? "Xoá khỏi Thư viện"
+                                        : "Thêm vào Thư viện"}
                                 </button>
                             </>
                         )}
@@ -94,7 +101,6 @@ function PlaylistOptions({ children, playlist, setIsShowModalUpdate }: PlaylistO
                     idPlaylist={playlist._id}
                 />
             )}
-            <ToastMessage content={toast} />
         </>
     );
 }

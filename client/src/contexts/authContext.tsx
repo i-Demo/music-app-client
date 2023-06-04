@@ -18,6 +18,7 @@ interface AuthContextType {
     editPlaylist: (idPlaylist: string, playlistData: object) => Promise<any>;
     deletePlaylist: (idPlaylist: string) => Promise<any>;
     togglePublic: (idPlaylist: string) => Promise<any>;
+    togglePlaylist: (idPlaylist: string) => Promise<any>;
 }
 export const AuthContext = createContext({} as AuthContextType);
 
@@ -196,6 +197,17 @@ function AuthContextProvider({ children }: Props) {
             else return { success: false, message: error.message };
         }
     };
+    // Add/Remove Playlist to/from Library
+    const togglePlaylist = async (idPlaylist: string) => {
+        try {
+            const response = await axios.put(`${apiUrl}/playlists/toggle-playlist/${idPlaylist}`);
+            authDispatch(response.data.user);
+            return response.data;
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
 
     const authContextData = {
         registerUser,
@@ -210,6 +222,7 @@ function AuthContextProvider({ children }: Props) {
         editPlaylist,
         deletePlaylist,
         togglePublic,
+        togglePlaylist,
     };
 
     useEffect(() => {

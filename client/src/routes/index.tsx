@@ -13,6 +13,7 @@ import Top100 from "../pages/Top100";
 import Playlist from "../pages/Playlist";
 import User from "../pages/User";
 import AllPublicPlaylists from "../pages/AllPublicPlaylists";
+import Type from "../pages/Type";
 
 // Public Routes
 const publicRoutes = [
@@ -31,6 +32,7 @@ const privateRoutes = [
     { path: "/user/:id", element: <User /> },
     { path: "/user/:id/public-playlists", element: <AllPublicPlaylists /> },
     { path: "/search", element: <Search /> },
+    { path: "/type/:type", element: <Type /> },
     { path: "/newPublish", element: <NewPublish /> },
     { path: "/top100", element: <Top100 /> },
     { path: "/library", element: <Library /> },

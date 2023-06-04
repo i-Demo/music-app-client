@@ -6,6 +6,7 @@ import defaultPlaylist from "@assets/images/defaultPlaylist.png";
 function Playlists() {
     const { authState, getPlaylists } = useContext(AuthContext);
     const [playlists, setPlaylists] = useState([]);
+    
     const navigate = useNavigate();
     // Call Api get Playlists
     const callGetPlaylists = async () => {

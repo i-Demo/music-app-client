@@ -26,7 +26,7 @@ function Sidebar() {
                         <NavItem to="/dashboard" icon={<AiOutlineHome className="text-2xl" />} title="Trang Chủ" />
                         <NavItem to="/search" icon={<AiOutlineSearch className="text-2xl" />} title="Tìm Kiếm" />
                         <NavItem to="/newPublish" icon={<FiMusic className="text-2xl" />} title="Nhạc Mới" />
-                        <NavItem to="/top100" icon={<FiStar className="text-2xl" />} title="Top 100" />
+                        <NavItem to="/type/top100" icon={<FiStar className="text-2xl" />} title="Top 100" />
                     </div>
                     <div className="rounded-md bg-bgPlayingBar my-2">
                         <NavItem

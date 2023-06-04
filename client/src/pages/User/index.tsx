@@ -33,7 +33,7 @@ function User() {
 
     useEffect(() => {
         callGetPlaylists();
-    }, []);
+    }, [user.publicPlaylists]);
 
     if (isLoading) return <Loading />;
     return (
@@ -54,7 +54,7 @@ function User() {
                         </Link>
                     )}
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-1 auto-rows-[0] overflow-y-hidden gap-3 md:gap-4 lg:gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-1 auto-rows-[0] overflow-y-hidden gap-x-3 md:gap-4 lg:gap-6">
                     {publicPlaylists.map((item: any, index) => (
                         <PlaylistItem key={index} playlist={item} />
                     ))}

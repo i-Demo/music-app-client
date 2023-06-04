@@ -171,7 +171,13 @@ function SongsItem({ songs, id, addedAt = [], offsetScroll = 380, removeSongOfCl
                                         delay={[200, 0]}
                                         className="tooltip text-xs"
                                     >
-                                        <p className="text-white text-sm lg:text-base whitespace-nowrap truncate cursor-pointer hover:underline">
+                                        <p
+                                            className={`text-sm lg:text-base whitespace-nowrap truncate cursor-pointer hover:underline ${
+                                                songState.song._id === song._id && songState.listSongsId === id
+                                                    ? "text-btn"
+                                                    : "text-white"
+                                            }`}
+                                        >
                                             {song.name}
                                         </p>
                                     </Tippy>
@@ -183,9 +189,11 @@ function SongsItem({ songs, id, addedAt = [], offsetScroll = 380, removeSongOfCl
                                 <span className="cursor-pointer hover:underline">{song.name}</span>
                             </div>
 
-                            <div className="hidden lg:block grow group-hover:text-tGray">{`${moment(
-                                addedAt[index]
-                            ).fromNow()}`}</div>
+                            {addedAt.length !== 0 && (
+                                <div className="hidden lg:block grow group-hover:text-tGray">{`${moment(
+                                    addedAt[index]
+                                ).fromNow()}`}</div>
+                            )}
 
                             <div className="w-[30%] md:w-[20%] lg:w-[15%] flex justify-around">
                                 <Tippy

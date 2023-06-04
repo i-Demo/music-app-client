@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useReducer, useEffect, useLayoutEffect } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import { songReducer } from "../reducers/songReducer";
 import { LOCAL_STORAGE_SONG_STATE_NAME, apiUrl } from "./variables";
 
@@ -175,11 +175,9 @@ function SongContextProvider({ children }: Props) {
     };
 
     useEffect(() => {
-        if (localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME)) {
-            const storageSong = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME) || "{}");
-            setSongDispatch(storageSong.song, storageSong.songs, storageSong.listSongsId);
-            pauseSongDispatch();
-        }
+        const storageSong = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME) || "{}");
+        setSongDispatch(storageSong.song, storageSong.songs, storageSong.listSongsId);
+        pauseSongDispatch();
     }, []);
 
     const songContextData = {
