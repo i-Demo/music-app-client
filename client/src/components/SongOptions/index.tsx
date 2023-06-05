@@ -11,7 +11,7 @@ interface SongOptionsType {
     children: JSX.Element;
     idPlaylist?: string;
     idSong: string;
-    index: number;
+    index?: number;
     removeSongOfClient?: any;
 }
 function SongOptions({ children, idPlaylist = "", idSong, index, removeSongOfClient }: SongOptionsType) {

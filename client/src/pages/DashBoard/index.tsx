@@ -1,22 +1,28 @@
 import { useState, useEffect, useRef, useContext } from "react";
+import { AuthContext } from "../../contexts/authContext";
 import { SongContext } from "../../contexts/songContext";
 import NewSong from "./NewSong";
 import Loading from "../../components/Loading";
 import Header from "../../components/Header";
+import ListPlaylists from "./ListPlaylists";
 
-interface TypeDataSongs {
-    newSongs: any;
-}
 function DashBoard() {
+    const { getPlaylists, getRandomPlaylists } = useContext(AuthContext);
+    const { getNewSongs } = useContext(SongContext);
     const [isLoading, setIsLoading] = useState(true);
     const scrollRef = useRef<HTMLDivElement>(null);
-    const { getNewSongs } = useContext(SongContext);
-
-    const [dataSongs, setDataSongs] = useState<TypeDataSongs>({
+    const dataDashboard = useRef<any>({
         newSongs: [],
+        topPlaylists: [],
+        chillPlaylists: [],
+        lofiPlaylists: [],
+        edmPlaylists: [],
     });
 
-    const callGetNewSongAPIs = async () => {
+    console.log(dataDashboard.current);
+
+    // Get New Songs
+    const callGetNewSongsAPIs = async () => {
         try {
             const data = await Promise.all([
                 getNewSongs({ limit: 12 }),
@@ -24,14 +30,60 @@ function DashBoard() {
                 getNewSongs({ country: "korea", limit: 12 }),
                 getNewSongs({ country: "us-uk", limit: 12 }),
             ]);
-            setDataSongs({ ...dataSongs, newSongs: data });
+            dataDashboard.current = { ...dataDashboard.current, newSongs: data };
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Get Top Playlists Hot
+    const callGetTopPlaylistsAPI = async () => {
+        try {
+            const data = await getPlaylists({ genre: "Bảng xếp hạng Nổi bật", limit: 5 });
+            dataDashboard.current = { ...dataDashboard.current, topPlaylists: data.playlists };
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Get Chill Playlists
+    const callGetChillPlaylistsAPI = async () => {
+        try {
+            const data = await getRandomPlaylists({ type: "chill", limit: 5 });
+            dataDashboard.current = { ...dataDashboard.current, chillPlaylists: data.playlists };
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Get Chill Playlists
+    const callGetLofiPlaylistsAPI = async () => {
+        try {
+            const data = await getRandomPlaylists({ type: "lofi", limit: 5 });
+            dataDashboard.current = { ...dataDashboard.current, lofiPlaylists: data.playlists };
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Get Chill Playlists
+    const callGetEdmPlaylistsAPI = async () => {
+        try {
+            const data = await getRandomPlaylists({ type: "edm", limit: 5 });
+            dataDashboard.current = { ...dataDashboard.current, edmPlaylists: data.playlists };
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        Promise.all([callGetNewSongAPIs()]).then(() => {
+        Promise.all([
+            callGetNewSongsAPIs(),
+            callGetChillPlaylistsAPI(),
+            callGetLofiPlaylistsAPI(),
+            callGetEdmPlaylistsAPI(),
+            callGetTopPlaylistsAPI(),
+        ]).then(() => {
             setIsLoading(false);
         });
 
@@ -47,19 +99,15 @@ function DashBoard() {
                 {/* <div className="mx-6 mb-8 bg-white h-72 rounded-md p-2">
                     <h2 className="text-primary">title</h2>
                 </div> */}
-                <NewSong songs={dataSongs.newSongs} />
-                <div>
-                    <h2 className="text-2xl font-bold mb-5">Chill</h2>
-                </div>
-                <div>
-                    <h2 className="text-2xl font-bold mb-5">Lofi</h2>
-                </div>
-                <div>
-                    <h2 className="text-2xl font-bold mb-5">EDM</h2>
-                </div>
-                <div>
-                    <h2 className="text-2xl font-bold mb-5">Bảng xếp hạng Nổi bật</h2>
-                </div>
+                <NewSong songs={dataDashboard.current.newSongs} />
+
+                <ListPlaylists title="Chill" playlists={dataDashboard.current.edmPlaylists} type="chill" />
+
+                <ListPlaylists title="Lofi" playlists={dataDashboard.current.chillPlaylists} type="lofi" />
+
+                <ListPlaylists title="EDM" playlists={dataDashboard.current.lofiPlaylists} type="edm" />
+
+                <ListPlaylists title="Bảng xếp hạng Nổi bật" playlists={dataDashboard.current.topPlaylists} />
             </div>
         </>
     );

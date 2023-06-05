@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import Header from "../../components/Header";
+import Types from "./Types";
+import SongItem from "./SongItem";
+import PlayButton from "./PlayButton";
+import UserItem from "../components/UserItem";
+import PlaylistItem from "../components/PlaylistItem";
+import useDebounce from "../../hooks/useDebounce";
 import { MdClear } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
 import { apiUrl } from "../../contexts/variables";
-import axios from "axios";
-import useDebounce from "../../hooks/useDebounce";
-import Types from "./Types";
-import SongItem from "./SongItem";
-import PlaylistItem from "../components/PlaylistItem";
-import UserItem from "../components/UserItem";
-import PlayButton from "./PlayButton";
 import { GiMusicSpell } from "react-icons/gi";
 
 function Search() {

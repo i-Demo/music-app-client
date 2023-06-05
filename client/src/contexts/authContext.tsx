@@ -14,6 +14,7 @@ interface AuthContextType {
     authState: any;
     authDispatch: (user: any) => void;
     getPlaylists: (params: object) => Promise<any>;
+    getRandomPlaylists: (params: object) => Promise<any>;
     createPlaylist: (playlistData: object) => Promise<any>;
     editPlaylist: (idPlaylist: string, playlistData: object) => Promise<any>;
     deletePlaylist: (idPlaylist: string) => Promise<any>;
@@ -153,6 +154,18 @@ function AuthContextProvider({ children }: Props) {
             else return { success: false, message: error.message };
         }
     };
+    // Get Random Playlists
+    const getRandomPlaylists = async (params: object) => {
+        try {
+            const response = await axios.get(`${apiUrl}/playlists/random`, { params: params });
+            if (response.data.success) {
+                return response.data;
+            }
+        } catch (error: any) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    };
     // Create Playlist
     const createPlaylist = async (playlistData: object) => {
         try {
@@ -218,6 +231,7 @@ function AuthContextProvider({ children }: Props) {
         authState,
         authDispatch,
         getPlaylists,
+        getRandomPlaylists,
         createPlaylist,
         editPlaylist,
         deletePlaylist,

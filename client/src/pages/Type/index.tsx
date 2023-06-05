@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../../components/Header";
 import axios from "axios";
-import { apiUrl } from "../../contexts/variables";
+import Header from "../../components/Header";
 import PlaylistItem from "../components/PlaylistItem";
+import { apiUrl } from "../../contexts/variables";
 
 function Type() {
     const [type, setType] = useState({ image: "", name: "" });
