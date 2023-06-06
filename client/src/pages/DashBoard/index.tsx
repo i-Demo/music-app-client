@@ -19,8 +19,6 @@ function DashBoard() {
         edmPlaylists: [],
     });
 
-    console.log(dataDashboard.current);
-
     // Get New Songs
     const callGetNewSongsAPIs = async () => {
         try {
