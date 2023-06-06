@@ -175,9 +175,11 @@ function SongContextProvider({ children }: Props) {
     };
 
     useEffect(() => {
-        const storageSong = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME) || "{}");
-        setSongDispatch(storageSong.song, storageSong.songs, storageSong.listSongsId);
-        pauseSongDispatch();
+        if (localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME)) {
+            const storageSong = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SONG_STATE_NAME) || "{}");
+            setSongDispatch(storageSong.song, storageSong.songs, storageSong.playlist);
+            pauseSongDispatch();
+        }
     }, []);
 
     const songContextData = {

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineMail, AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { AuthContext } from "../../../contexts/authContext";
 import AlertMessage, { TypeAlert } from "../../../components/AlertMessage";
+import Loading from "../../../components/Loading";
 
 function Login() {
     const [isHide, setIsHide] = useState(true);
@@ -13,6 +14,7 @@ function Login() {
     const { email, password } = loginData;
     const [alert, setAlert] = useState<TypeAlert | null>(null);
     const { loginUser } = useContext(AuthContext);
+    const [isLogin, setIsLogin] = useState(false);
 
     // Two-way binding Register Data
     const onChangeLoginData = (e: { target: { name: string; value: string } }) => {
@@ -31,10 +33,12 @@ function Login() {
     // Handle when clicking registers
     const handleLogin = async (e: any) => {
         e.preventDefault();
+        setIsLogin(true);
         try {
             const dataLogin = await loginUser(loginData);
             if (!dataLogin.success) {
                 setAlert({ type: "danger", message: dataLogin.message });
+                setIsLogin(false);
             }
         } catch (error) {
             console.log(error);
@@ -87,9 +91,15 @@ function Login() {
                 <a href="#" className="text-sm underline text-tGray hover:text-white">
                     Reset Password
                 </a>
-                <button type="submit" className="btn bg-white hover:scale-105 my-8">
-                    Log in
-                </button>
+                {isLogin ? (
+                    <div className="my-8">
+                        <Loading />
+                    </div>
+                ) : (
+                    <button type="submit" className="btn bg-white hover:scale-105 my-8">
+                        Log in
+                    </button>
+                )}
             </form>
 
             <Link to="/register" className="mb-12 text-sm text-tGray font-semibold">

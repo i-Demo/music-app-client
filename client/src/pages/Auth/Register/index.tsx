@@ -4,6 +4,7 @@ import { AiOutlineMail, AiOutlineEyeInvisible, AiOutlineEye, AiOutlineQuestionCi
 // import { AuthContext } from '@authContext';
 import { AuthContext } from "../../../contexts/authContext";
 import AlertMessage, { TypeAlert } from "../../../components/AlertMessage";
+import Loading from "../../../components/Loading";
 
 function Register() {
     const [isHide, setIsHide] = useState(true);
@@ -14,6 +15,7 @@ function Register() {
     });
     const [alert, setAlert] = useState<TypeAlert | null>(null);
     const { email, password, name } = registerData;
+    const [isRegister, setIsRegister] = useState(false);
     // Context
     const { registerUser } = useContext(AuthContext);
 
@@ -34,11 +36,12 @@ function Register() {
     // Handle when clicking register
     const handleRegister = async (e: any) => {
         e.preventDefault();
-
+        setIsRegister(true);
         try {
             const dataRegister = await registerUser(registerData);
             if (!dataRegister.success) {
                 setAlert({ type: "danger", message: dataRegister.message });
+                setIsRegister(false);
             }
         } catch (error) {
             console.log(error);
@@ -105,9 +108,15 @@ function Register() {
                         <AiOutlineQuestionCircle />
                     </span>
                 </div>
-                <button type="submit" className="btn bg-btn my-4">
-                    Continue
-                </button>
+                {isRegister ? (
+                    <div className="my-8">
+                        <Loading />
+                    </div>
+                ) : (
+                    <button type="submit" className="btn bg-btn my-4">
+                        Continue
+                    </button>
+                )}
             </form>
 
             <Link to="/" className="my-4 text-tGray font-bold hover:text-white">

@@ -100,12 +100,14 @@ function PlayingBarCenter({ timeSong, setTimeSong, audioRef }: any) {
                 <Tippy content="Tiếp theo" delay={[200, 0]} className="tooltip">
                     <button
                         className={` ${
-                            listSong.indexOf(songState.song) === listSong.length - 1 && songState.repeat !== "all"
+                            (listSong.indexOf(songState.song) === listSong.length - 1 && songState.repeat === "none") ||
+                            songState.songs.length === 0
                                 ? "cursor-not-allowed opacity-30 hover:opacity-30"
                                 : "opacity-70 hover:opacity-100"
                         }`}
                         onClick={
-                            listSong.indexOf(songState.song) !== listSong.length - 1 || songState.repeat === "all"
+                            (listSong.indexOf(songState.song) !== listSong.length - 1 || songState.repeat !== "none") &&
+                            songState.songs.length !== 0
                                 ? handleNextSong
                                 : () => {}
                         }
