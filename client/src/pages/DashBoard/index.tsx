@@ -88,7 +88,12 @@ function DashBoard() {
         scrollRef.current?.scrollTo(0, 0);
     }, []);
 
-    if (isLoading) return <Loading />;
+    if (isLoading)
+        return (
+            <div className="flex justify-center items-center w-full h-full">
+                <Loading />
+            </div>
+        );
 
     return (
         <>

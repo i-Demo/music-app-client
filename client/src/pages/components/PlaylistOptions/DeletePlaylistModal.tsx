@@ -10,7 +10,7 @@ function DeletePlaylistModal({ onClick, name, idPlaylist }: { onClick: any; name
         e.preventDefault();
         const response = await deletePlaylist(idPlaylist);
         navigate("/library");
-        console.log(response);
+        console.log(response.message);
     };
 
     return (

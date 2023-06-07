@@ -34,8 +34,6 @@ function SongContextProvider({ children }: Props) {
         songsRandom: [],
     });
 
-    console.log(songState);
-
     const setSongDispatch = (song: object, songs: object[], listSongsId = "") => {
         if (songState.isRandom && songState.songs !== songs) {
             const temp = songs.slice(0);

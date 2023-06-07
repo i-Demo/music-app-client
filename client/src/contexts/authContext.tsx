@@ -32,7 +32,6 @@ function AuthContextProvider({ children }: Props) {
         isAuthenticated: false,
         user: {},
     });
-    console.log(authState);
 
     const authDispatch = (user: object) => {
         dispatch({

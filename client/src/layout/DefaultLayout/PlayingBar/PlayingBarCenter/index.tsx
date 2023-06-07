@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { BsShuffle } from "react-icons/bs";
 import { MdPlayArrow, MdOutlinePause, MdRepeat, MdSkipNext, MdSkipPrevious, MdRepeatOne } from "react-icons/md";
 import { SongContext } from "../../../../contexts/songContext";
@@ -7,7 +7,10 @@ import { SongContext } from "../../../../contexts/songContext";
 function PlayingBarCenter({ timeSong, setTimeSong, audioRef }: any) {
     const { songState, setSongDispatch, playSongDispatch, pauseSongDispatch, repeatSongDispatch, randomSongDispatch } =
         useContext(SongContext);
-    const percent = Math.round((timeSong.currentTime / timeSong.duration) * 100) | 0;
+    const [isDrag, setIsDrag] = useState(false);
+    const [timeDrag, setTimeDrag] = useState(0);
+    const percent =
+        Math.round((isDrag ? timeDrag / timeSong.duration : timeSong.currentTime / timeSong.duration) * 100) | 0;
     let listSong: string | any[] = [];
     songState.isRandom ? (listSong = songState.songsRandom) : (listSong = songState.songs);
 
@@ -21,6 +24,14 @@ function PlayingBarCenter({ timeSong, setTimeSong, audioRef }: any) {
 
     // Handle when change time song on range
     const handleChangeTime = (e: any) => {
+        setTimeDrag(e.target.value);
+    };
+
+    const handleMouseDown = (e: any) => {
+        setIsDrag(true);
+    };
+    const handleMouseUp = (e: any) => {
+        setIsDrag(false);
         setTimeSong({ ...timeSong, currentTime: e.target.value });
         audioRef.current.currentTime = e.target.value;
     };
@@ -149,9 +160,11 @@ function PlayingBarCenter({ timeSong, setTimeSong, audioRef }: any) {
                     min={0}
                     max={timeSong.duration}
                     step={1}
-                    value={timeSong.currentTime}
+                    value={isDrag ? timeDrag : timeSong.currentTime}
                     className={`w-full mx-2 cursor-pointer range`}
-                    onInput={handleChangeTime}
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    onChange={handleChangeTime}
                 />
                 <span className="opacity-70">{convertTime(timeSong.duration)}</span>
             </div>
