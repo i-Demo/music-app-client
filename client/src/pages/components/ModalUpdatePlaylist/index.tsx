@@ -66,6 +66,8 @@ function ModalUpdatePlaylist({ playlist, setPlaylist, setIsShowModal }: ModalUpd
             const response = await editPlaylist(playlist._id, playlistData);
             setIsUpdating(false);
             if (response.success) {
+                console.log(response);
+                
                 setIsShowModal(false);
                 setPlaylist(response.playlist);
             } else {

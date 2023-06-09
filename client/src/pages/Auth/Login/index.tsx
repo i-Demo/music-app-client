@@ -36,9 +36,7 @@ function Login() {
         setIsLogin(true);
         try {
             const dataLogin = await loginUser(loginData);
-            console.log(dataLogin.success );
-            
-            if (!dataLogin.success || dataLogin.success === undefined) {
+            if (!dataLogin.success) {
                 setAlert({ type: "danger", message: dataLogin.message });
                 setIsLogin(false);
             }

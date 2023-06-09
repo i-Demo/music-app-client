@@ -43,7 +43,7 @@ function AddToPPlaylistOption({ children, setVisible, songId, setToast }: AddToP
                 render={(attrs) => (
                     <div
                         {...attrs}
-                        className="tooltip flex flex-col p-1 min-w-[196px] min-h-max"
+                        className="tooltip flex flex-col p-1 min-w-[196px] min-h-max max-h-96 overflow-y-scroll scrollbar"
                         onClick={() => setVisible(false)}
                     >
                         {authState.user.myPlaylists.length === 0 ? (
@@ -55,10 +55,10 @@ function AddToPPlaylistOption({ children, setVisible, songId, setToast }: AddToP
                                 {authState.user.myPlaylists.map((playlist: any, index: number) => (
                                     <button
                                         key={index}
-                                        className="menu cursor-pointer"
+                                        className="menu cursor-pointer max-w-[348px]"
                                         onClick={() => handleAddSongToPlaylist(playlist._id, songId, playlist.name)}
                                     >
-                                        {playlist.name}
+                                        <p className="whitespace-nowrap truncate">{playlist.name}</p>
                                     </button>
                                 ))}
                             </>
