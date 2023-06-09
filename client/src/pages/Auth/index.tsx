@@ -14,9 +14,9 @@ function Auth({ authRoute }: { authRoute: string }) {
 
     if (isAuthLoading) {
         return (
-            <>
+            <div className="flex justify-center items-center w-screen h-screen">
                 <Loading />
-            </>
+            </div>
         );
     } else if (isAuthenticated) {
         return <Navigate to="/dashboard" />;

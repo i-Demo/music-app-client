@@ -11,7 +11,12 @@ const PrivateRoute = ({ children }: PrivateRouteType) => {
         authState: { isAuthLoading, isAuthenticated },
     } = useContext(AuthContext);
 
-    if (isAuthLoading) return <Loading />;
+    if (isAuthLoading)
+        return (
+            <div className="flex justify-center items-center w-screen h-screen">
+                <Loading />
+            </div>
+        );
 
     return isAuthenticated ? <>{children}</> : <Navigate to="/" />;
 };

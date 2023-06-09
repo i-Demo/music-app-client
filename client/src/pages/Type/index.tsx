@@ -56,8 +56,8 @@ function Type() {
             <div className="spaceContent">
                 {genre.map((data: any, index: number) => (
                     <div key={index}>
-                        <p className="text-xl font-bold">{data.genre}</p>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-4 lg:gap-6">
+                        <p className="text-xl font-bold mb-4">{data.genre}</p>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-4 lg:gap-6 mb-12">
                             {data.playlists.map((playlist: any, index: number) => (
                                 <PlaylistItem key={index} playlist={playlist} />
                             ))}

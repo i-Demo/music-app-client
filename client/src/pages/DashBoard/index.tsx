@@ -104,11 +104,11 @@ function DashBoard() {
                 </div> */}
                 <NewSong songs={dataDashboard.current.newSongs} />
 
-                <ListPlaylists title="Chill" playlists={dataDashboard.current.edmPlaylists} type="chill" />
+                <ListPlaylists title="Chill" playlists={dataDashboard.current.chillPlaylists} type="chill" />
 
-                <ListPlaylists title="Lofi" playlists={dataDashboard.current.chillPlaylists} type="lofi" />
+                <ListPlaylists title="Lofi" playlists={dataDashboard.current.lofiPlaylists} type="lofi" />
 
-                <ListPlaylists title="EDM" playlists={dataDashboard.current.lofiPlaylists} type="edm" />
+                <ListPlaylists title="EDM" playlists={dataDashboard.current.edmPlaylists} type="edm" />
 
                 <ListPlaylists title="Bảng xếp hạng Nổi bật" playlists={dataDashboard.current.topPlaylists} />
             </div>
