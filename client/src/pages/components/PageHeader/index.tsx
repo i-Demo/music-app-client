@@ -27,7 +27,7 @@ function PageHeader({ id, image, title, name, desc, avatar, userID, userName, so
         }, 0);
         const hours = Math.floor(totalDuration / 3600);
         const minutes = Math.floor((totalDuration - hours * 3600) / 60);
-        const stringTime = `khoảng ${hours > 0 ? hours + "giờ" : ""}${minutes} phút`;
+        const stringTime = `khoảng ${hours > 0 ? hours + " giờ " : ""}${minutes} phút`;
         return stringTime;
     };
     // Change font-size according text length
