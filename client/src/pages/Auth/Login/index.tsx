@@ -41,6 +41,8 @@ function Login() {
                 setIsLogin(false);
             }
         } catch (error) {
+            // setAlert({ type: "danger", message: error.message });
+            setIsLogin(false);
             console.log(error);
         }
     };

@@ -104,7 +104,7 @@ function SongsItem({ songs, id, addedAt = [], offsetScroll = 380, removeSongOfCl
                     return (
                         <div
                             key={index}
-                            className={`group flex items-center justify-between gap-4 px-4 h-14 rounded hover:bg-[#313131] hover:text-white ${
+                            className={`group flex items-center justify-between gap-4 px-4 h-14 rounded hover:bg-[#313131] hover:text-white max-w-full ${
                                 songState.song._id === song._id && songState.listSongsId === id ? "bg-bgTooltip" : ""
                             }`}
                             onDoubleClick={() => setSongDispatch(song, songs, id)}
@@ -156,7 +156,7 @@ function SongsItem({ songs, id, addedAt = [], offsetScroll = 380, removeSongOfCl
                                     )}
                                 </div>
                             </div>
-                            <div className="w-[65%] md:w-[40%] lg:w-[35%] flex gap-4">
+                            <div className="w-[65%] md:w-[40%] lg:w-[35%] truncate flex gap-4">
                                 <div className="flex items-center">
                                     <img
                                         src={song.image}
@@ -181,11 +181,11 @@ function SongsItem({ songs, id, addedAt = [], offsetScroll = 380, removeSongOfCl
                                             {song.name}
                                         </p>
                                     </Tippy>
-                                    <span>{song.artist}</span>
+                                    <span className="text-">{song.artist}</span>
                                 </div>
                             </div>
 
-                            <div className="md:w-[30%] md:max-w-[150px] lg:w-[25%] lg:max-w-[25%] hidden md:block truncate">
+                            <div className="md:w-[30%] md:max-w-[150px] lg:w-[25%] lg:max-w-[250px] hidden md:block truncate">
                                 <span className="cursor-pointer hover:underline">{song.name}</span>
                             </div>
 

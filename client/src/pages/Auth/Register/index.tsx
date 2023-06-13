@@ -44,6 +44,7 @@ function Register() {
                 setIsRegister(false);
             }
         } catch (error) {
+            setIsRegister(false);
             console.log(error);
         }
     };
